@@ -1450,7 +1450,7 @@ window.addEventListener('scroll', () => {
 </div>
 
 <script>
-(function() {
+document.addEventListener('DOMContentLoaded', function() {
   const launcher = document.getElementById('chat-launcher');
   const win = document.getElementById('chat-window');
   const msgs = document.getElementById('chat-messages');
@@ -1458,123 +1458,108 @@ window.addEventListener('scroll', () => {
   const sendBtn = document.getElementById('chat-send');
   const qrContainer = document.getElementById('quick-replies');
 
-  // ===== KNOWLEDGE BASE =====
   const KB = [
     {
       keys: ['hi','hello','hey','hii','helo','howdy','sup','yo'],
-      reply: "Hey 👋 I'm Ankit. I can tell you about My skills, projects, experience, and how to get in touch. What would you like to know?"
+      reply: "Hey! 👋 I'm Ankit. Ask me about my skills, projects, experience, or how to reach me — I'll answer!"
     },
     {
-      keys: ['skill','tech','stack','know','language','languages','use','work with','expertise','proficient'],
-      reply: "My core stack:\n\n🔷 <b>Android</b> — Kotlin, Jetpack, Android SDK\n🌐 <b>Web</b> — React, Node.js, JavaScript, HTML/CSS\n🗄️ <b>Backend</b> — REST APIs, Firebase\n🛠️ <b>Tools</b> — Git, VS Code, Android Studio\n\nHe picks the right tool for the job — not just the trendy one."
+      keys: ['smart dnd','dnd app','do not disturb'],
+      reply: "Smart DND is my Android app that automates Do Not Disturb mode. Set a status — Studying, Sleeping, Driving, Meeting — and it handles auto-reply, DND sync, and auto-off timer automatically.<br><br>Built entirely in Kotlin. Check it on GitHub: <a href='https://github.com/AnkitCodesHub/smartDND' target='_blank' style='color:#a78bfa'>github.com/AnkitCodesHub/smartDND</a>"
     },
     {
-      keys: ['project','app','build','built','made','work','portfolio','android','smartdnd','password','manager'],
-      reply: "I've shipped 2 real apps so far:\n\n📱 <b>Smart DND</b> — An Android app for intelligent Do Not Disturb scheduling.\n🔐 <b>Password Manager</b> —  Want to know more about either one?"
-    },
-    
-    {
-      keys: ['contact','reach','email','message','hire','connect','touch','dm','whatsapp'],
-      reply: "Best ways to reach Me:\n\n📬 Fill out the <b>contact form</b> at the bottom of this page — I'll reply within 24 hours.\n💼 LinkedIn — linked in the footer.\n🐙 GitHub — check out his code.\n\nOr just scroll down to the contact section!"
+      keys: ['passop','password manager','passop project','mongodb project'],
+      reply: "PassOP is my full-stack password manager built with React, Node.js and MongoDB. Passwords are encrypted — no plaintext storage.<br><br>It's live on Render right now. Try it: <a href='https://passop-mongo-zrll.onrender.com' target='_blank' style='color:#a78bfa'>passop-mongo-zrll.onrender.com</a>"
     },
     {
-      keys: ['available','open','job','work','freelance','opportunity','hire','looking','position','role'],
-      reply: "✅ I am currently <b>open to work</b>! I am looking for Android and web development roles (full-time or freelance). If you have an interesting opportunity, drop Me message via the contact form."
+      keys: ['project','app','build','built','made','portfolio','what have you'],
+      reply: "I've shipped 2 real apps so far:\n\n📱 <b>Smart DND</b> — Android app for intelligent Do Not Disturb scheduling.\n🔐 <b>PassOP</b> — Full-stack password manager (React + Node + MongoDB).\n\nWant to know more about either one? Just ask!"
     },
     {
-      keys: ['experience','year','background','story','journey','about','who'],
-      reply: "I am is a Full-Stack Developer based in India. I focus on Android and web apps, have shipped 2 production apps, and currently working with Kotlin, React, and Node.js. I am passionate about building things that actually solve problems — not just coding exercises."
+      keys: ['education','degree','college','university','study','qualify','qualification','btech','b.tech','electrical','nawada','academic'],
+      reply: "I hold a <b>B.Tech in Electrical Engineering</b> from Government Engineering College, Nawada (2026 graduate). 🎓<br><br>Self-taught developer — built my Android and web skills entirely outside the core curriculum. Everything I've shipped is something I built on my own, not a college assignment."
+    },
+    {
+      keys: ['why','coding','started','got into','passion','how did you','journey into'],
+      reply: "Honest answer? I was an EE student who found circuits boring and code exciting. 😅<br><br>Started building Android apps in my second year just to see if I could. Shipped Smart DND, then PassOP — and never looked back. EE degree, developer by choice."
+    },
+    {
+      keys: ['skill','tech','stack','language','languages','work with','expertise','proficient','know'],
+      reply: "My core stack:\n\n🔷 <b>Android</b> — Kotlin, Jetpack, Android SDK\n🌐 <b>Web</b> — React, Node.js, JavaScript, HTML/CSS\n🗄️ <b>Backend</b> — REST APIs, Firebase, MongoDB\n🛠️ <b>Tools</b> — Git, VS Code, Android Studio\n\nI pick whatever gets the job done — not just the trendy one."
+    },
+    {
+      keys: ['favourite','favorite','prefer','love to','enjoy','best language','best stack','like most'],
+      reply: "Kotlin for Android — it's clean, expressive, and just makes sense. On the web side I enjoy React + Node.js.<br><br>But honestly, I pick whatever gets the job done. I'm not married to any stack."
+    },
+    {
+      keys: ['hardest','difficult','challenge','struggled','tough','problem you solved'],
+      reply: "Building Smart DND taught me the most. Android's DND permission system is restrictive and handling auto-reply while managing battery and background processes properly was genuinely tricky.<br><br>Took multiple rewrites but I got it working. That's the one I'm most proud of."
+    },
+    {
+      keys: ['strength','good at','best at','what makes you','different','stand out','unique'],
+      reply: "I build things end-to-end. I don't just write frontend or just backend — I've shipped complete apps from design to deployment by myself.<br><br>Coming from an EE background means I had to figure out CS on my own. I actually understand what I'm building, not just following tutorials."
+    },
+    {
+      keys: ['working on','currently','right now','latest','new project','building now'],
+      reply: "Right now I'm focused on levelling up my full-stack skills and actively looking for my first professional role. Open to internships and full-time opportunities in Android or web dev. 🚀"
+    },
+    {
+      keys: ['freelance','rate','price','cost','charge','how much'],
+      reply: "Yes, I'm open to freelance work! For rates and project scope, best to reach out directly — email me at ankitraj5309@gmail.com and we can talk. 👇"
+    },
+    {
+      keys: ['remote','work from home','wfh','onsite','relocate'],
+      reply: "I'm based in India and fully comfortable working remotely. Open to remote roles worldwide. Also open to relocating for the right opportunity. 🌍"
+    },
+    {
+      keys: ['internship','intern','fresher','entry level','junior','first job'],
+      reply: "Yes, actively looking! I'm a 2026 graduate open to internships and entry-level roles in Android development or full-stack web. If you have something in mind, reach out — I'd love to talk."
+    },
+    {
+      keys: ['available','open','job','opportunity','hire','looking','position','role'],
+      reply: "✅ I'm currently <b>open to work</b>! Looking for Android and web development roles — full-time or freelance. If you have an interesting opportunity, drop me a message via the contact form."
+    },
+    {
+      keys: ['contact','reach','email','message','connect','touch','dm','whatsapp'],
+      reply: "Best ways to reach me:\n\n📬 Fill out the <b>contact form</b> at the bottom of this page — I'll reply within 24 hours.\n💼 LinkedIn — linked in the footer.\n🐙 GitHub — all my code is there.\n\nOr just scroll down to the contact section!"
     },
     {
       keys: ['resume','cv','download','pdf'],
-      reply: "You can view My full experience right here on this portfolio. For a PDF resume, just reach out via the contact form and I'll send it over directly. 📄"
+      reply: "You can download my resume directly here 👇<br><br><a href='resume.pdf' download style='display:inline-block;margin-top:6px;padding:8px 16px;background:linear-gradient(135deg,#6c63ff,#a78bfa);color:#fff;border-radius:8px;text-decoration:none;font-weight:600;font-size:0.82rem;'>⬇ Download Resume (PDF)</a>"
     },
     {
-      keys: ['play store','google play','download','install'],
-      reply: "Both of My apps — Smart DND and Password Manager — are not on the Google Play Store. Working on it to get there📱"
+      keys: ['play store','google play','install'],
+      reply: "My apps aren't on the Play Store yet — working on it! 📱 You can check the source on GitHub in the meantime."
     },
     {
       keys: ['location','based','india','where','city','country'],
-      reply: "I am from India 🇮🇳. I work remotely and i am open to remote opportunities worldwide."
+      reply: "I'm from India 🇮🇳. I work remotely and I'm open to remote opportunities worldwide."
     },
     {
       keys: ['social','github','linkedin','twitter','link'],
-      reply: "You can find Me on:\n🐙 GitHub — for his code\n💼 LinkedIn — for professional stuff\n\nLinks are in the footer of this page!"
+      reply: "You can find me on:\n🐙 GitHub — all my code\n💼 LinkedIn — professional stuff\n\nLinks are in the footer of this page!"
+    },
+    {
+      keys: ['experience','background','story','about','who'],
+      reply: "I'm a Full-Stack Developer based in India focused on Android and web apps. I've shipped 2 production apps and work primarily with Kotlin, React, and Node.js.<br><br>I'm passionate about building things that actually solve problems — not just coding exercises."
+    },
+    {
+      keys: ['hobby','hobbies','outside work','free time','besides coding','apart from'],
+      reply: "Outside coding I like exploring how things work — probably why I ended up in tech despite studying electrical. Also into music and the occasional late-night debugging session that somehow turns into a new project idea. 😄"
     },
     {
       keys: ['thank','thanks','thx','appreciate','great','awesome','nice','cool'],
-      reply: "Happy to help! 😊 Feel free to ask anything else, or scroll through the portfolio. Don't forget to reach out if you have an opportunity!"
+      reply: "Happy to help! 😊 Feel free to ask anything else. Don't forget to reach out if you have an opportunity!"
     },
     {
       keys: ['bye','goodbye','cya','later','done','exit'],
-      reply: "Nice chatting with you! 👋 If you want to get in touch with Ankit, use the contact form at the bottom. Good luck!"
-    },
-    {
-      keys: ['education','degree','college','university','study','qualify','qualification','btech','b.tech','electrical','nawada','background','academic',''],
-      reply: "Ankit holds a <b>B.Tech in Electrical Engineering</b> from Government Engineering College, Nawada (2026 graduate). 🎓<br><br>He's a self-taught developer — built his Android and web skills entirely outside his core curriculum. Both shipped apps and the full-stack PassOP project are things he built on his own, not college assignments."
-},
-{
-  keys: ['why','coding','started','got into','passion','how did you','story','journey into'],
-  reply: "Honest answer? I was an Electrical Engineering student who found circuits boring and code exciting. 😅<br><br>Started building Android apps in my second year just to see if I could. Shipped Smart DND, then PassOP — and never looked back. EE degree, developer by choice."
-},
-
-{
-  keys: ['working on','current','currently','right now','latest','new project','building now'],
-  reply: "Right now I'm focused on levelling up my full-stack skills and actively looking for my first professional role. Open to internships and full-time opportunities in Android or web dev. 🚀"
-},
-
-{
-  keys: ['favourite','favorite','prefer','love to','enjoy','best language','best stack','like most'],
-  reply: "Kotlin for Android — it's clean, expressive, and just makes sense. On the web side I enjoy React + Node.js.<br><br>But honestly, I pick whatever gets the job done. I'm not married to any stack."
-},
-
-{
-  keys: ['hardest','difficult','challenge','struggled','tough','problem you solved'],
-  reply: "Building Smart DND taught me the most. Android's DND permission system is restrictive and handling auto-reply while managing battery and background processes properly was genuinely tricky.<br><br>Took multiple rewrites but I got it working. That's the one I'm most proud of."
-},
-
-{
-  keys: ['freelance','hire','cost','charge','rate','price','how much'],
-  reply: "Yes, I'm open to freelance work! For rates and project scope, best to reach out directly — drop me a message via the contact form or email me at ankitraj5309@gmail.com and we can talk. 👇"
-},
-
-{
-  keys: ['remote','work from home','wfh','location preference','onsite','relocate'],
-  reply: "I'm based in India and fully comfortable working remotely. Open to remote roles worldwide. Also open to relocating for the right opportunity. 🌍"
-},
-
-{
-  keys: ['strength','good at','best at','what makes you','different','stand out','unique'],
-  reply: "I build things end-to-end. I don't just write frontend or just backend — I've shipped complete apps from design to deployment by myself.<br><br>And coming from an EE background means I had to figure out CS on my own, which means I actually understand what I'm building, not just following tutorials."
-},
-
-{
-  keys: ['hobby','hobbies','outside work','free time','besides coding','apart from'],
-  reply: "Outside coding I like exploring how things work — which is probably why I ended up in tech despite studying electrical. Also into music and the occasional late-night debugging session that somehow turns into a new project idea. 😄"
-},
-
-{
-  keys: ['internship','intern','fresher','entry level','junior','first job'],
-  reply: "Yes, actively looking! I'm a 2026 graduate open to internships and entry-level roles in Android development or full-stack web. If you have something in mind, reach out — I'd love to talk."
-},
-
-{
-  keys: ['passop','password manager','passop project','mongo','mongodb project'],
-  reply: "PassOP is a full-stack password manager built with React, Node.js and MongoDB. Passwords are encrypted — no plaintext storage.<br><br>It's live on Render right now. You can try it: <a href='https://passop-mongo-zrll.onrender.com' target='_blank' style='color:#a78bfa'>passop-mongo-zrll.onrender.com</a>"
-},
-
-{
-  keys: ['smart dnd','dnd app','do not disturb','android app','kotlin app'],
-  reply: "Smart DND is my Android app that automates Do Not Disturb mode. You set a status — Studying, Sleeping, Driving, Meeting — and it handles auto-reply, DND sync, and auto-off timer automatically.<br><br>Built entirely in Kotlin. Check it on GitHub: <a href='https://github.com/AnkitCodesHub/smartDND' target='_blank' style='color:#a78bfa'>github.com/AnkitCodesHub/smartDND</a>"
-},
-
+      reply: "Nice chatting! 👋 Use the contact form at the bottom if you want to get in touch. Good luck!"
+    }
   ];
 
-  const DEFAULT = "Hmm, I'm not sure about that one. Try asking about Ankit's <b>skills</b>, <b>projects</b>, <b>availability</b>, or <b>how to contact him</b>! 🤔";
+  const DEFAULT = "Hmm, not sure about that one. Try asking about my <b>skills</b>, <b>projects</b>, <b>availability</b>, or <b>how to contact me</b>! 🤔";
+  const QUICK_REPLIES = ['Skills', 'Projects', 'Available for hire?', 'Contact', 'Education', 'Hobbies'];
 
-  const QUICK_REPLIES = ['Skills', 'Projects', 'Available for hire?', 'Contact','About','degree'];
-
-  // ===== HELPERS =====
   function addMsg(text, who) {
     const div = document.createElement('div');
     div.className = 'msg ' + who;
@@ -1601,7 +1586,7 @@ window.addEventListener('scroll', () => {
   function getBotReply(text) {
     const lower = text.toLowerCase();
     for (const entry of KB) {
-      if (entry.keys.some(k => lower.includes(k))) {
+      if (entry.keys.some(k => k && lower.includes(k))) {
         return entry.reply;
       }
     }
@@ -1633,13 +1618,12 @@ window.addEventListener('scroll', () => {
     }, 700 + Math.random() * 400);
   }
 
-  // ===== EVENTS =====
   launcher.addEventListener('click', () => {
     const isOpen = win.classList.toggle('open');
     launcher.classList.toggle('open', isOpen);
     if (isOpen && msgs.children.length === 0) {
       setTimeout(() => {
-        addMsg("Hey! 👋 I'm Ankit's assistant. Ask me about his skills, projects, or how to hire him!", 'bot');
+        addMsg("Hey! 👋 I'm Ankit. Ask me about my skills, projects, or how to hire me!", 'bot');
         renderQuickReplies(QUICK_REPLIES);
       }, 250);
     }
@@ -1648,8 +1632,7 @@ window.addEventListener('scroll', () => {
 
   sendBtn.addEventListener('click', () => handleUserInput(input.value));
   input.addEventListener('keydown', e => { if (e.key === 'Enter') handleUserInput(input.value); });
-})();
+});
 </script>
 </body>
 </html>
-
