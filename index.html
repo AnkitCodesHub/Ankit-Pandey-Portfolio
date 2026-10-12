@@ -1185,5 +1185,411 @@ window.addEventListener('scroll', () => {
     window.scrollY > 60 ? '0.8rem 5%' : '1.2rem 5%';
 });
 </script>
+<style>
+/* Chat launcher button */
+#chat-launcher {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6c63ff, #a78bfa);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 24px rgba(108,99,255,0.5);
+  z-index: 9998;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+#chat-launcher:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 32px rgba(108,99,255,0.7);
+}
+#chat-launcher svg { width: 26px; height: 26px; fill: #fff; transition: opacity 0.2s; }
+#chat-launcher .icon-close { display: none; }
+#chat-launcher.open .icon-chat { display: none; }
+#chat-launcher.open .icon-close { display: block; }
 
+/* Chat window */
+#chat-window {
+  position: fixed;
+  bottom: 96px;
+  right: 28px;
+  width: 340px;
+  max-height: 500px;
+  background: rgba(16,16,26,0.96);
+  border: 1px solid rgba(108,99,255,0.25);
+  border-radius: 20px;
+  backdrop-filter: blur(24px);
+  display: flex;
+  flex-direction: column;
+  z-index: 9997;
+  box-shadow: 0 8px 48px rgba(0,0,0,0.6), 0 0 0 1px rgba(108,99,255,0.1);
+  transform: scale(0.92) translateY(12px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), opacity 0.2s;
+}
+#chat-window.open {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Chat header */
+.chat-header {
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.chat-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6c63ff, #a78bfa);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.chat-header-info { flex: 1; }
+.chat-header-name {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #f0f0f5;
+  line-height: 1.2;
+}
+.chat-header-status {
+  font-size: 0.72rem;
+  color: #4ade80;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.chat-header-status::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4ade80;
+  display: inline-block;
+}
+
+/* Messages area */
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 320px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(108,99,255,0.3) transparent;
+}
+.chat-messages::-webkit-scrollbar { width: 3px; }
+.chat-messages::-webkit-scrollbar-thumb { background: rgba(108,99,255,0.3); border-radius: 2px; }
+
+/* Message bubbles */
+.msg {
+  max-width: 82%;
+  padding: 9px 13px;
+  border-radius: 14px;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  word-break: break-word;
+}
+.msg.bot {
+  background: rgba(108,99,255,0.12);
+  border: 1px solid rgba(108,99,255,0.2);
+  color: #e0e0ef;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+.msg.user {
+  background: linear-gradient(135deg, #6c63ff, #a78bfa);
+  color: #fff;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+.msg a { color: #a78bfa; text-decoration: underline; }
+
+/* Quick reply chips */
+.quick-replies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0 16px 8px;
+}
+.qr-chip {
+  background: rgba(108,99,255,0.1);
+  border: 1px solid rgba(108,99,255,0.3);
+  color: #a78bfa;
+  font-size: 0.75rem;
+  padding: 5px 11px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background 0.15s;
+  font-family: var(--font-body);
+}
+.qr-chip:hover { background: rgba(108,99,255,0.22); }
+
+/* Input area */
+.chat-input-row {
+  padding: 10px 12px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+#chat-input {
+  flex: 1;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 8px 12px;
+  color: #f0f0f5;
+  font-size: 0.83rem;
+  font-family: var(--font-body);
+  outline: none;
+  transition: border 0.2s;
+}
+#chat-input::placeholder { color: #555566; }
+#chat-input:focus { border-color: rgba(108,99,255,0.5); }
+#chat-send {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #6c63ff, #a78bfa);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: opacity 0.2s;
+}
+#chat-send:hover { opacity: 0.85; }
+#chat-send svg { width: 16px; height: 16px; fill: #fff; }
+
+/* Typing indicator */
+.typing-dots {
+  display: flex;
+  gap: 4px;
+  padding: 2px 0;
+  align-items: center;
+}
+.typing-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #6c63ff;
+  animation: dot-bounce 1.2s infinite;
+}
+.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes dot-bounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-5px); }
+}
+
+/* Pulse ring on launcher */
+#chat-launcher::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid rgba(108,99,255,0.5);
+  animation: pulse-ring 2.5s ease-out infinite;
+}
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.8; }
+  80% { transform: scale(1.4); opacity: 0; }
+  100% { opacity: 0; }
+}
+#chat-launcher.open::after { display: none; }
+
+@media (max-width: 400px) {
+  #chat-window { width: calc(100vw - 32px); right: 16px; }
+  #chat-launcher { right: 16px; bottom: 16px; }
+}
+</style>
+
+<!-- Chat HTML -->
+<button id="chat-launcher" aria-label="Open chat">
+  <svg class="icon-chat" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/>
+  </svg>
+  <svg class="icon-close" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 6L6 18M6 6l12 12" stroke="#fff" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+  </svg>
+</button>
+
+<div id="chat-window">
+  <div class="chat-header">
+    <div class="chat-avatar">🤖</div>
+    <div class="chat-header-info">
+      <div class="chat-header-name">Ankit's Assistant</div>
+      <div class="chat-header-status">Online now</div>
+    </div>
+  </div>
+  <div class="chat-messages" id="chat-messages"></div>
+  <div class="quick-replies" id="quick-replies"></div>
+  <div class="chat-input-row">
+    <input id="chat-input" type="text" placeholder="Ask me anything…" autocomplete="off"/>
+    <button id="chat-send">
+      <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+(function() {
+  const launcher = document.getElementById('chat-launcher');
+  const win = document.getElementById('chat-window');
+  const msgs = document.getElementById('chat-messages');
+  const input = document.getElementById('chat-input');
+  const sendBtn = document.getElementById('chat-send');
+  const qrContainer = document.getElementById('quick-replies');
+
+  // ===== KNOWLEDGE BASE =====
+  const KB = [
+    {
+      keys: ['hi','hello','hey','hii','helo','howdy','sup','yo'],
+      reply: "Hey there! 👋 I'm Ankit's assistant. I can tell you about his skills, projects, experience, and how to get in touch. What would you like to know?"
+    },
+    {
+      keys: ['skill','tech','stack','know','language','languages','use','work with','expertise','proficient'],
+      reply: "Ankit's core stack:\n\n🔷 <b>Android</b> — Kotlin, Jetpack, Android SDK\n🌐 <b>Web</b> — React, Node.js, JavaScript, HTML/CSS\n🗄️ <b>Backend</b> — REST APIs, Firebase\n🛠️ <b>Tools</b> — Git, VS Code, Android Studio\n\nHe picks the right tool for the job — not just the trendy one."
+    },
+    {
+      keys: ['project','app','build','built','made','work','portfolio','android','smartdnd','password','manager'],
+      reply: "Ankit has shipped 2 real apps so far:\n\n📱 <b>Smart DND</b> — An Android app for intelligent Do Not Disturb scheduling.\n🔐 <b>Password Manager</b> — A secure Android app for managing credentials.\n\nBoth are live on the Play Store. Want to know more about either one?"
+    },
+    {
+      keys: ['contact','reach','email','message','hire','connect','touch','dm','whatsapp'],
+      reply: "Best ways to reach Ankit:\n\n📬 Fill out the <b>contact form</b> at the bottom of this page — he'll reply within 24 hours.\n💼 LinkedIn — linked in the footer.\n🐙 GitHub — check out his code.\n\nOr just scroll down to the contact section!"
+    },
+    {
+      keys: ['available','open','job','work','freelance','opportunity','hire','looking','position','role'],
+      reply: "✅ Ankit is currently <b>open to work</b>! He's looking for Android and web development roles (full-time or freelance). If you have an interesting opportunity, drop him a message via the contact form."
+    },
+    {
+      keys: ['experience','year','background','story','journey','about','who'],
+      reply: "Ankit is a Full-Stack Developer based in India. He focuses on Android and web apps, has shipped 2 production apps, and currently works with Kotlin, React, and Node.js. He's passionate about building things that actually solve problems — not just coding exercises."
+    },
+    {
+      keys: ['resume','cv','download','pdf'],
+      reply: "You can view Ankit's full experience right here on this portfolio. For a PDF resume, just reach out via the contact form and he'll send it over directly. 📄"
+    },
+    {
+      keys: ['play store','google play','download','install'],
+      reply: "Both of Ankit's apps — Smart DND and Password Manager — are on the Google Play Store. Check the Projects section on this page for direct links! 📱"
+    },
+    {
+      keys: ['location','based','india','where','city','country'],
+      reply: "Ankit is based in India 🇮🇳. He works remotely and is open to remote opportunities worldwide."
+    },
+    {
+      keys: ['social','github','linkedin','twitter','link'],
+      reply: "You can find Ankit on:\n🐙 GitHub — for his code\n💼 LinkedIn — for professional stuff\n\nLinks are in the footer of this page!"
+    },
+    {
+      keys: ['thank','thanks','thx','appreciate','great','awesome','nice','cool'],
+      reply: "Happy to help! 😊 Feel free to ask anything else, or scroll through Ankit's portfolio. Don't forget to reach out if you have an opportunity!"
+    },
+    {
+      keys: ['bye','goodbye','cya','later','done','exit'],
+      reply: "Nice chatting with you! 👋 If you want to get in touch with Ankit, use the contact form at the bottom. Good luck!"
+    }
+  ];
+
+  const DEFAULT = "Hmm, I'm not sure about that one. Try asking about Ankit's <b>skills</b>, <b>projects</b>, <b>availability</b>, or <b>how to contact him</b>! 🤔";
+
+  const QUICK_REPLIES = ['Skills', 'Projects', 'Available for hire?', 'Contact'];
+
+  // ===== HELPERS =====
+  function addMsg(text, who) {
+    const div = document.createElement('div');
+    div.className = 'msg ' + who;
+    div.innerHTML = text.replace(/\n/g, '<br>');
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+    return div;
+  }
+
+  function showTyping() {
+    const div = document.createElement('div');
+    div.className = 'msg bot';
+    div.id = 'typing-indicator';
+    div.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+    msgs.appendChild(div);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+
+  function removeTyping() {
+    const t = document.getElementById('typing-indicator');
+    if (t) t.remove();
+  }
+
+  function getBotReply(text) {
+    const lower = text.toLowerCase();
+    for (const entry of KB) {
+      if (entry.keys.some(k => lower.includes(k))) {
+        return entry.reply;
+      }
+    }
+    return DEFAULT;
+  }
+
+  function renderQuickReplies(chips) {
+    qrContainer.innerHTML = '';
+    chips.forEach(label => {
+      const btn = document.createElement('button');
+      btn.className = 'qr-chip';
+      btn.textContent = label;
+      btn.onclick = () => handleUserInput(label);
+      qrContainer.appendChild(btn);
+    });
+  }
+
+  function handleUserInput(text) {
+    if (!text.trim()) return;
+    addMsg(text, 'user');
+    input.value = '';
+    qrContainer.innerHTML = '';
+    showTyping();
+    setTimeout(() => {
+      removeTyping();
+      const reply = getBotReply(text);
+      addMsg(reply, 'bot');
+      renderQuickReplies(QUICK_REPLIES);
+    }, 700 + Math.random() * 400);
+  }
+
+  // ===== EVENTS =====
+  launcher.addEventListener('click', () => {
+    const isOpen = win.classList.toggle('open');
+    launcher.classList.toggle('open', isOpen);
+    if (isOpen && msgs.children.length === 0) {
+      setTimeout(() => {
+        addMsg("Hey! 👋 I'm Ankit's assistant. Ask me about his skills, projects, or how to hire him!", 'bot');
+        renderQuickReplies(QUICK_REPLIES);
+      }, 250);
+    }
+    if (isOpen) input.focus();
+  });
+
+  sendBtn.addEventListener('click', () => handleUserInput(input.value));
+  input.addEventListener('keydown', e => { if (e.key === 'Enter') handleUserInput(input.value); });
+})();
+</script>
 </body>
+</html>
+
