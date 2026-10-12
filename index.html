@@ -1323,10 +1323,13 @@ window.addEventListener('scroll', () => {
 /* Quick reply chips */
 .quick-replies {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
   gap: 6px;
   padding: 0 16px 8px;
+  scrollbar-width: none;
 }
+.quick-replies::-webkit-scrollbar { display: none; }
 .qr-chip {
   background: rgba(108,99,255,0.1);
   border: 1px solid rgba(108,99,255,0.3);
@@ -1464,7 +1467,7 @@ window.addEventListener('scroll', () => {
     {
       keys: ['hi','hello','hey','hii','helo','howdy','sup','yo'],
       reply: "Hey! 👋 I'm Ankit's assistant. Ask me about his skills, projects, availability, or how to reach him.",
-      followups: ['Skills', 'Projects', 'Available for hire?', 'Contact','personal']
+      followups: ['Skills', 'Projects', 'Contact','fun stuff']
     },
      {
       keys: ['smart dnd','do not disturb','dnd app','dnd project'],
@@ -1491,8 +1494,10 @@ window.addEventListener('scroll', () => {
       reply: "Honest answer? I was an EE student who got curious about Android apps and couldn't stop. 💡<br><br>Started small, shipped real things, and here we are. The mix of logic and building stuff people actually use is what keeps me hooked.",
       followups: ['Skills', 'Projects', 'Education']
     },
-    { keys : ['personal'],
-      followups : ['hobby','girlfriend','food','age']
+      {
+      keys: ['fun stuff','personal','fun','personal questions','about you'],
+      reply: "Ooh, getting personal! 😄 Ask me anything fun — girlfriend, favourite food, chai vs coffee, age, or just ask me to tell a joke. Go ahead!",
+      followups: ['Girlfriend?', 'Favourite food', 'Tell a joke', 'Age?']
     },
     {
       keys: ['skill','tech','stack','language','languages','work with','expertise','proficient','know'],
@@ -1608,7 +1613,7 @@ window.addEventListener('scroll', () => {
   ];
 
   const DEFAULT = "Hmm, not sure about that one. Try asking about my <b>skills</b>, <b>projects</b>, <b>availability</b>, or <b>contact info</b>! 🤔";
-  const QUICK_REPLIES = ['Skills', 'Projects', 'Available for hire?', 'Contact'];
+  const QUICK_REPLIES = ['Skills', 'Projects','Contact','fun'];
 
   // ===== HELPERS =====
   function addMsg(text, who) {
