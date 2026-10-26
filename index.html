@@ -1,365 +1,545 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ankit Pandey — Portfolio</title>
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Syne:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>">  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Syne:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap"
+    rel="stylesheet" />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
-/* ===== CSS VARIABLES ===== */
-:root {
-  --bg: #0a0a0f;
-  --bg2: #10101a;
-  --surface: rgba(255,255,255,0.04);
-  --border: rgba(255,255,255,0.08);
-  --accent: #6c63ff;
-  --accent2: #ff6584;
-  --gold: #f5c518;
-  --text: #f0f0f5;
-  --muted: #888899;
-  --glass: rgba(255,255,255,0.05);
-  --glow: 0 0 40px rgba(108,99,255,0.3);
-  --radius: 16px;
-  --font-display: 'Syne', sans-serif;
-  --font-body: 'DM Sans', sans-serif;
-}
+    /* ===== CSS VARIABLES ===== */
+    :root {
+      --bg: #0a0a0f;
+      --bg2: #10101a;
+      --surface: rgba(255, 255, 255, 0.04);
+      --border: rgba(255, 255, 255, 0.08);
+      --accent: #6c63ff;
+      --accent2: #ff6584;
+      --gold: #f5c518;
+      --text: #f0f0f5;
+      --muted: #888899;
+      --glass: rgba(255, 255, 255, 0.05);
+      --glow: 0 0 40px rgba(108, 99, 255, 0.3);
+      --radius: 16px;
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
 
-/* ===== RESET & BASE ===== */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: var(--font-body);
-  background: var(--bg);
-  color: var(--text);
-  overflow-x: hidden;
-  line-height: 1.6;
-}
+    /* ===== RESET & BASE ===== */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-/* ===== SCROLLBAR ===== */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 2px; }
+    html {
+      scroll-behavior: smooth;
+    }
 
-/* ===== NOISE OVERLAY ===== */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0.4;
-}
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
 
-/* ===== NAVBAR ===== */
-nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.2rem 5%;
-  background: rgba(10,10,15,0.85);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-  transition: all 0.3s;
-}
-.nav-logo {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-.nav-logo span { color: var(--accent); }
-.nav-links { display: flex; gap: 2rem; list-style: none; }
-.nav-links a {
-  color: var(--muted);
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: color 0.2s;
-  letter-spacing: 0.02em;
-}
-.nav-links a:hover { color: var(--text); }
-.nav-cta {
-  background: var(--accent);
-  color: #fff !important;
-  padding: 0.5rem 1.2rem;
-  border-radius: 8px;
-  font-weight: 600 !important;
-}
-.hamburger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
-.hamburger span { width: 24px; height: 2px; background: var(--text); border-radius: 2px; transition: all 0.3s; }
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
 
-/* ===== HERO ===== */
-#hero {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  padding: 8rem 5% 4rem;
-  padding-bottom: 4rem;
-  position: relative;
-  overflow: hidden;
-}
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(108,99,255,0.12) 0%, transparent 70%),
-              radial-gradient(ellipse 50% 40% at 20% 80%, rgba(255,101,132,0.08) 0%, transparent 60%);
-}
-.hero-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
-  width: 100%;
-  position: relative;
-  z-index: 1;
-}
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: rgba(108,99,255,0.15);
-  border: 1px solid rgba(108,99,255,0.3);
-  padding: 0.4rem 1rem;
-  border-radius: 50px;
-  font-size: 0.8rem;
-  color: var(--accent);
-  font-weight: 500;
-  margin-bottom: 1.5rem;
-  letter-spacing: 0.05em;
-}
-.hero-badge::before {
-  content: '';
-  width: 6px; height: 6px;
-  background: var(--accent);
-  border-radius: 50%;
-  animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(1.3); }
-}
-.hero-name {
-  font-family: var(--font-display);
-  font-size: clamp(3rem, 6vw, 5rem);
-  font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
-  margin-bottom: 0.5rem;
-}
-.hero-name .line2 {
-  background: white;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.hero-title {
-  font-size: 2rem;
-  color: var(--muted);
-  font-weight: 400;
-  margin-bottom: 1.2rem;
-  letter-spacing: 0.04em;
-}
-.hero-tagline {
-  font-size: 1.3rem;
-  color: var(--text);
-  font-weight: 300;
-  margin-bottom: 2.5rem;
-  max-width: 440px;
-  line-height: 1.7;
-}
-.hero-tagline em { color: var(--accent); font-style: normal; font-weight: 500; }
-.btn-row { display: flex; gap: 1rem; flex-wrap: wrap; }
-.btn {
-  padding: 0.85rem 1.8rem;
-  border-radius: 10px;
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  text-decoration: none;
-  transition: all 0.25s;
-  letter-spacing: 0.02em;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.btn-primary {
-  background: linear-gradient(135deg, var(--accent), #9b92ff);
-  color: #fff;
-  border: none;
-  box-shadow: 0 8px 30px rgba(108,99,255,0.35);
-}
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(108,99,255,0.5); }
-.btn-ghost {
-  background: transparent;
-  color: var(--text);
-  border: 1px solid var(--border);
-}
-.btn-ghost:hover { background: var(--surface); border-color: rgba(255,255,255,0.2); transform: translateY(-2px); }
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
 
-/* Hero photo */
-.hero-photo-wrap {
-  position: relative;
-  display: flex;
-  justify-content: center;
-}
-.hero-photo-ring {
-  position: absolute;
-  inset: -20px;
-  border-radius: 50%;
-  border: 1px solid rgba(108,99,255,0.2);
-  animation: rotate 20s linear infinite;
-}
-.hero-photo-ring::after {
-  content: '';
-  position: absolute;
-  top: 5%; left: 50%;
-  width: 10px; height: 10px;
-  background: var(--accent);
-  border-radius: 50%;
-  box-shadow: 0 0 12px var(--accent);
-}
-@keyframes rotate { to { transform: rotate(360deg); } }
-.hero-photo {
-  width: 340px; height: 420px;
-  object-fit: cover;
-  border-radius: 30px 30px 120px 30px;
-  border: 1px solid var(--border);
-  box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 60px rgba(108,99,255,0.15);
-  position: relative;
-  z-index: 1;
-}
-.hero-float-card {
-  position: absolute;
-  background: var(--glass);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 0.8rem 1rem;
-  font-size: 0.8rem;
-  z-index: 2;
-}
-.hero-float-card.c1 { bottom: 40px; left: -30px; }
-.hero-float-card.c2 { top: 60px; right: -20px; }
-.card-label { color: var(--muted); font-size: 0.7rem; margin-bottom: 0.2rem; }
-.card-val { font-weight: 700; font-family: var(--font-display); font-size: 1.1rem; color: var(--accent); }
+    ::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 2px;
+    }
 
-/* ===== SECTION COMMON ===== */
-section { padding: 6rem 5%; }
-.section-inner { max-width: 1200px; margin: 0 auto; }
-.section-label {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--accent);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  margin-bottom: 0.8rem;
-}
-.section-label::before {
-  content: '';
-  width: 20px; height: 1px;
-  background: var(--accent);
-}
-.section-title {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  margin-bottom: 1rem;
-}
-.section-title .accent { color: var(--accent); }
-.section-sub { color: var(--muted); max-width: 560px; font-size: 1rem; line-height: 1.7; }
+    /* ===== NOISE OVERLAY ===== */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
 
-/* ===== DIVIDER ===== */
-.divider {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border), transparent);
-  margin: 0 5%;
-}
+    /* ===== NAVBAR ===== */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 5%;
+      background: rgba(10, 10, 15, 0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: all 0.3s;
+    }
 
-/* ===== ABOUT ===== */
-#about { background: var(--bg2);
- background-image: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(108,99,255,0.12) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 40% at 20% 80%, rgba(255,101,132,0.08) 0%, transparent 60%); 
-  padding-bottom : 3rem;}
-.about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  gap: 5rem;
-  align-items: center;
-  margin-top: 3rem;
-   /* background: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(108,99,255,0.12) 0%, transparent 70%),
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .nav-logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-cta {
+      background: var(--accent);
+      color: #fff !important;
+      padding: 0.5rem 1.2rem;
+      border-radius: 8px;
+      font-weight: 600 !important;
+    }
+
+    .hamburger {
+      display: none;
+      cursor: pointer;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    /* ===== HERO ===== */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 5% 4rem;
+      padding-bottom: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(108, 99, 255, 0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 20% 80%, rgba(255, 101, 132, 0.08) 0%, transparent 60%);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(108, 99, 255, 0.15);
+      border: 1px solid rgba(108, 99, 255, 0.3);
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.05em;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.5;
+        transform: scale(1.3);
+      }
+    }
+
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-name .line2 {
+      background: white;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-title {
+      font-size: 2rem;
+      color: var(--muted);
+      font-weight: 400;
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-tagline {
+      font-size: 1.3rem;
+      color: var(--text);
+      font-weight: 300;
+      margin-bottom: 2.5rem;
+      max-width: 440px;
+      line-height: 1.7;
+    }
+
+    .hero-tagline em {
+      color: var(--accent);
+      font-style: normal;
+      font-weight: 500;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 0.85rem 1.8rem;
+      border-radius: 10px;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.25s;
+      letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), #9b92ff);
+      color: #fff;
+      border: none;
+      box-shadow: 0 8px 30px rgba(108, 99, 255, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(108, 99, 255, 0.5);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      background: var(--surface);
+      border-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* Hero photo */
+    .hero-photo-wrap {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+
+    .hero-photo-ring {
+      position: absolute;
+      inset: -20px;
+      border-radius: 50%;
+      border: 1px solid rgba(108, 99, 255, 0.2);
+      animation: rotate 20s linear infinite;
+    }
+
+    .hero-photo-ring::after {
+      content: '';
+      position: absolute;
+      top: 5%;
+      left: 50%;
+      width: 10px;
+      height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 12px var(--accent);
+    }
+
+    @keyframes rotate {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .hero-photo {
+      width: 340px;
+      height: 420px;
+      object-fit: cover;
+      border-radius: 30px 30px 120px 30px;
+      border: 1px solid var(--border);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), 0 0 60px rgba(108, 99, 255, 0.15);
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-float-card {
+      position: absolute;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.8rem 1rem;
+      font-size: 0.8rem;
+      z-index: 2;
+    }
+
+    .hero-float-card.c1 {
+      bottom: 40px;
+      left: -30px;
+    }
+
+    .hero-float-card.c2 {
+      top: 60px;
+      right: -20px;
+    }
+
+    .card-label {
+      color: var(--muted);
+      font-size: 0.7rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .card-val {
+      font-weight: 700;
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--accent);
+    }
+
+    /* ===== SECTION COMMON ===== */
+    section {
+      padding: 6rem 5%;
+    }
+
+    .section-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.8rem;
+    }
+
+    .section-label::before {
+      content: '';
+      width: 20px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .section-title .accent {
+      color: var(--accent);
+    }
+
+    .section-sub {
+      color: var(--muted);
+      max-width: 560px;
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    /* ===== DIVIDER ===== */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 0 5%;
+    }
+
+    /* ===== ABOUT ===== */
+    #about {
+      background: var(--bg2);
+      background-image: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(108, 99, 255, 0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 20% 80%, rgba(255, 101, 132, 0.08) 0%, transparent 60%);
+      padding-bottom: 3rem;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 5rem;
+      align-items: center;
+      margin-top: 3rem;
+      /* background: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(108,99,255,0.12) 0%, transparent 70%),
               radial-gradient(ellipse 50% 40% at 20% 80%, rgba(255,101,132,0.08) 0%, transparent 60%); */
-}
+    }
 
-.about-img-wrap { position: relative; }
-.about-img-circle {
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 2px solid rgba(108,99,255,0.3);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-}
+    .about-img-wrap {
+      position: relative;
+    }
 
-.about-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center top;
-}
-.about-sticker {
-  position: absolute;
-  background: var(--glass);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1rem;
-  bottom: -20px;
-  right: -20px;
-  text-align: center;
-}
-.about-sticker .num { font-family: var(--font-display); font-size: 2rem; font-weight: 700; color: var(--accent); }
-.about-sticker .lbl { font-size: 0.72rem; color: var(--muted); }
-.about-bio { font-size: 1.05rem; color: var(--muted); line-height: 1.85; margin: 1.5rem 0; }
-.about-bio strong { color: var(--text); font-weight: 500; }
-.interests { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1.5rem; }
-.interest-tag {
-  background: rgba(108,99,255,0.12);
-  border: 1px solid rgba(108,99,255,0.2);
-  color: var(--accent);
-  padding: 0.4rem 1rem;
-  border-radius: 50px;
-  font-size: 0.82rem;
-  font-weight: 500;
-}
-.about-bio p {
-  margin-bottom: 1.2rem;
-}
+    .about-img-circle {
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid rgba(108, 99, 255, 0.3);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
 
-.about-bio p:last-child {
-  margin-bottom: 0;
-}
-.about-img-wrap {
-  position: relative;
-  overflow: visible; 
-}
+    .about-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    .about-sticker {
+      position: absolute;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem;
+      bottom: -20px;
+      right: -20px;
+      text-align: center;
+    }
+
+    .about-sticker .num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .about-sticker .lbl {
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .about-bio {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.85;
+      margin: 1.5rem 0;
+    }
+
+    .about-bio strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .interests {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+
+    .interest-tag {
+      background: rgba(108, 99, 255, 0.12);
+      border: 1px solid rgba(108, 99, 255, 0.2);
+      color: var(--accent);
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      font-size: 0.82rem;
+      font-weight: 500;
+    }
+
+    .about-bio p {
+      margin-bottom: 1.2rem;
+    }
+
+    .about-bio p:last-child {
+      margin-bottom: 0;
+    }
+
+    .about-img-wrap {
+      position: relative;
+      overflow: visible;
+    }
 
 
-/* ===== GALLERY ===== */
-/* #gallery { position: relative; }
+    /* ===== GALLERY ===== */
+    /* #gallery { position: relative; }
 .gallery-intro { margin-bottom: 3rem; }
 .gallery-grid {
   display: grid;
@@ -381,8 +561,8 @@ section { padding: 6rem 5%; }
   width: 100%; height: 100%;
   object-fit: cover;
   transition: transform 0.6s ease; */
-/* } */
-/* .gallery-item:hover img { transform: scale(1.06); }
+    /* } */
+    /* .gallery-item:hover img { transform: scale(1.06); }
 .gallery-overlay {
   position: absolute;
   inset: 0;
@@ -404,7 +584,7 @@ section { padding: 6rem 5%; }
   margin-left: auto;
 } */
 
-/* Lightbox
+    /* Lightbox
 .lightbox {
   display: none;
   position: fixed;
@@ -419,7 +599,7 @@ section { padding: 6rem 5%; }
 .lightbox img {
   max-width: 90vw;
   max-height: 90vh; */
-  /* object-fit: contain;
+    /* object-fit: contain;
   border-radius: 12px;
   box-shadow: 0 40px 120px rgba(0,0,0,0.8);
 }
@@ -438,451 +618,718 @@ section { padding: 6rem 5%; }
   justify-content: center;
 } */
 
-/* ===== SKILLS ===== */
-#skills { background: var(--bg2); 
- background-image: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(108,99,255,0.12) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 40% at 20% 80%, rgba(255,101,132,0.08) 0%, transparent 60%);}
+    /* ===== SKILLS ===== */
+    #skills {
+      background: var(--bg2);
+      background-image: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(108, 99, 255, 0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 20% 80%, rgba(255, 101, 132, 0.08) 0%, transparent 60%);
+    }
 
-.skills-table {
-  margin-top: 3rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-}
+    .skills-table {
+      margin-top: 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
 
-.skill-row {
-  display: grid;
-  grid-template-columns: 160px 1fr;
-  align-items: center;
-  padding: 1.2rem 1.8rem;
-  border-bottom: 1px solid var(--border);
-  gap: 2rem;
-}
+    .skill-row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      align-items: center;
+      padding: 1.2rem 1.8rem;
+      border-bottom: 1px solid var(--border);
+      gap: 2rem;
+    }
 
-.skill-row:last-child {
-  border-bottom: none;
-}
+    .skill-row:last-child {
+      border-bottom: none;
+    }
 
-.skill-row:hover {
-  background: var(--surface);
-}
+    .skill-row:hover {
+      background: var(--surface);
+    }
 
-.skill-category {
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
+    .skill-category {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
 
-.skill-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
 
-.skill-tag {
-  background: rgba(108,99,255,0.1);
-  border: 1px solid rgba(108,99,255,0.2);
-  color: var(--text);
-  padding: 0.35rem 0.9rem;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  font-weight: 500;
-}
+    .skill-tag {
+      background: rgba(108, 99, 255, 0.1);
+      border: 1px solid rgba(108, 99, 255, 0.2);
+      color: var(--text);
+      padding: 0.35rem 0.9rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
 
-@media (max-width: 640px) {
-  .skill-row {
-    grid-template-columns: 1fr;
-    gap: 0.8rem;
-    padding: 1rem 1.2rem;
-  }
-}
+    @media (max-width: 640px) {
+      .skill-row {
+        grid-template-columns: 1fr;
+        gap: 0.8rem;
+        padding: 1rem 1.2rem;
+      }
+    }
 
-/* ===== PROJECTS ===== */
-#projects {
-  background: var(--bg2);
-  background-image: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(108,99,255,0.12) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 40% at 20% 80%, rgba(255,101,132,0.08) 0%, transparent 60%);
-}
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 1.5rem;
-  margin-top: 3rem;
-}
-.project-card {
-  background: var(--glass);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  overflow: hidden;
-  transition: all 0.35s;
-  position: relative;
-}
-.project-card:hover { transform: translateY(-6px); border-color: rgba(108,99,255,0.35); box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 30px rgba(108,99,255,0.12); }
-.project-img {
-  width: 100%;
-  height: 200px;
-  overflow: hidden;
-  border-radius: 12px 12px 0 0;
-   background: var(--bg2);
-}
+    /* ===== PROJECTS ===== */
+    #projects {
+      background: var(--bg2);
+      background-image: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(108, 99, 255, 0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 20% 80%, rgba(255, 101, 132, 0.08) 0%, transparent 60%);
+    }
 
-.project-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top;
-}
-.project-img span { filter: drop-shadow(0 0 20px rgba(108,99,255,0.5)); }
-.project-body { padding: 1.5rem; }
-.project-tag {
-  display: inline-block;
-  background: rgba(108,99,255,0.15);
-  color: var(--accent);
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  padding: 0.25rem 0.7rem;
-  border-radius: 4px;
-  margin-bottom: 0.8rem;
-}
-.project-name { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
-.project-desc { color: var(--muted); font-size: 0.88rem; line-height: 1.6; margin-bottom: 1.2rem; }
-.project-links { display: flex; gap: 0.6rem; }
-.btn-sm {
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  transition: all 0.2s;
-}
-.btn-sm-ghost {
-  border: 1px solid var(--border);
-  color: var(--text);
-  background: transparent;
-}
-.btn-sm-ghost:hover { background: var(--surface); border-color: rgba(255,255,255,0.2); }
-.btn-sm-fill {
-  background: var(--accent);
-  color: #fff;
-  border: 1px solid transparent;
-}
-.btn-sm-fill:hover { background: #7a72ff; }
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-  margin-top: 3rem;
-}
+    rojects-grid {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 3rem;
+      padding: 8px 4px 1.2rem;
+      /* room for hover lift, otherwise clipped */
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: thin;
+      scrollbar-color: var(--accent) transparent;
+    }
 
-@media (max-width: 768px) {
-  .projects-grid { grid-template-columns: 1fr; }
-}
+    .projects-grid::-webkit-scrollbar {
+      height: 6px;
+    }
 
-/* ===== CONTACT ===== */
-#contact{
-  background: var(--bg2);
-  background-image: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(108,99,255,0.12) 0%, transparent 70%),
-    radial-gradient(ellipse 50% 40% at 20% 80%, rgba(255,101,132,0.08) 0%, transparent 60%);
-}
-.contact-grid {
-  display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  gap: 4rem;
-  margin-top: 3rem;
-  align-items: start;
-}
-.contact-info-title {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 0.8rem;
-}
-.contact-info-text { color: var(--muted); line-height: 1.7; margin-bottom: 2rem; font-size: 0.95rem; }
-.contact-links { display: flex; flex-direction: column; gap: 0.8rem; }
-.contact-link {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem 1.2rem;
-  background: var(--glass);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  text-decoration: none;
-  color: var(--text);
-  transition: all 0.25s;
-}
-.contact-link:hover { border-color: rgba(108,99,255,0.4); background: rgba(108,99,255,0.08); transform: translateX(4px); }
-.cl-icon {
-  width: 40px; height: 40px;
-  background: rgba(108,99,255,0.15);
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1rem;
-  color: var(--accent);
-  flex-shrink: 0;
-}
-.cl-text { font-size: 0.85rem; }
-.cl-text strong { display: block; font-weight: 600; margin-bottom: 0.1rem; }
-.cl-text span { color: var(--muted); font-size: 0.78rem; }
+    .projects-grid::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 3px;
+    }
 
-/* Contact form */
-.contact-form { display: flex; flex-direction: column; gap: 1rem; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
-.form-group label { font-size: 0.8rem; color: var(--muted); font-weight: 500; letter-spacing: 0.04em; }
-.form-group input,
-.form-group textarea {
-  background: var(--glass);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 0.85rem 1rem;
-  color: var(--text);
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  resize: none;
-}
-.form-group input:focus,
-.form-group textarea:focus {
-  border-color: rgba(108,99,255,0.5);
-  box-shadow: 0 0 0 3px rgba(108,99,255,0.1);
-}
-.form-group textarea { height: 120px; }
-.form-submit {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.9rem 2rem;
-  background: linear-gradient(135deg, var(--accent), #9b92ff);
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  font-family: var(--font-body);
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.25s;
-  align-self: flex-start;
-  box-shadow: 0 8px 30px rgba(108,99,255,0.35);
-}
-.form-submit:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(108,99,255,0.5); }
+    .project-card {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: all 0.35s;
+      position: relative;
+    }
 
-/* ===== FOOTER ===== */
-footer {
-  padding: 2.5rem 5%;
-  border-top: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-.footer-copy { color: var(--muted); font-size: 0.85rem; }
-.footer-copy span { color: var(--accent); }
-.footer-links { display: flex; gap: 1rem; }
-.footer-links a {
-  width: 36px; height: 36px;
-  background: var(--glass);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--muted);
-  text-decoration: none;
-  font-size: 0.85rem;
-  transition: all 0.2s;
-}
-.footer-links a:hover { color: var(--accent); border-color: rgba(108,99,255,0.4); background: rgba(108,99,255,0.08); }
+    .projects-grid {
+      display: flex;
+      overflow-x: auto;
+      gap: 1.5rem;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 1rem;
+    }
 
-/* ===== SCROLL ANIMATION ===== */
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.reveal.visible { opacity: 1; transform: translateY(0); }
+    .project-card {
+      flex: 0 0 min(420px, 85vw);
+      /* same width for every card */
+      scroll-snap-align: start;
+      display: flex;
+      flex-direction: column;
+    }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 900px) {
-  .hero-grid { grid-template-columns: 1fr; text-align: center; }
-  .hero-photo-wrap { order: -1; }
-  .hero-photo { width: 240px; height: 300px; }
-  .hero-tagline { margin: 0 auto 2rem; }
-  .btn-row { justify-content: center; }
-  .about-grid { grid-template-columns: 1fr; }
-  .about-img-wrap { display: flex; justify-content: center; }
-  .about-img { max-width: 280px; }
-  .contact-grid { grid-template-columns: 1fr; }
-  .gallery-grid { grid-template-columns: 1fr 1fr; }
-  .hero-float-card { display: none; }
-}
-@media (max-width: 640px) {
-  .nav-links { display: none; }
-  .hamburger { display: flex; }
-  .nav-links.open {
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: 70px; left: 0; right: 0;
-    background: rgba(10,10,15,0.98);
-    backdrop-filter: blur(20px);
-    padding: 2rem;
-    gap: 1.5rem;
-    border-bottom: 1px solid var(--border);
-  }
-  .gallery-grid { grid-template-columns: 1fr; }
-  .projects-grid { grid-template-columns: 1fr; }
-  .skills-grid { grid-template-columns: repeat(2, 1fr); }
-  .form-row { grid-template-columns: 1fr; }
-  footer { flex-direction: column; text-align: center; }
-}
-.cursor {
-  animation: blink 0.7s infinite;
-  color: var(--accent);
-}
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-.reveal:nth-child(2) { transition-delay: 0.1s; }
-.reveal:nth-child(3) { transition-delay: 0.2s; }
-.reveal:nth-child(4) { transition-delay: 0.3s; }
+    .project-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(108, 99, 255, 0.35);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 30px rgba(108, 99, 255, 0.12);
+    }
+
+    .project-img {
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+      border-radius: 12px 12px 0 0;
+      background: var(--bg2);
+    }
+
+    .project-img {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      /* centers the PassOP 🔐 placeholder */
+    }
+
+    .project-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-links {
+      margin-top: auto;
+    }
+
+    /* buttons align at the bottom across cards */
+    .project-img span {
+      filter: drop-shadow(0 0 20px rgba(108, 99, 255, 0.5));
+    }
+
+    .project-img img[src="consnow.png"] {
+      object-fit: contain;
+    }
+
+    .project-body {
+      padding: 1.5rem;
+    }
+
+    .project-tag {
+      display: inline-block;
+      background: rgba(108, 99, 255, 0.15);
+      color: var(--accent);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      padding: 0.25rem 0.7rem;
+      border-radius: 4px;
+      margin-bottom: 0.8rem;
+    }
+
+    .project-name {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-desc {
+      color: var(--muted);
+      font-size: 0.88rem;
+      line-height: 1.6;
+      margin-bottom: 1.2rem;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 0.6rem;
+    }
+
+    .btn-sm {
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s;
+    }
+
+    .btn-sm-ghost {
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: transparent;
+    }
+
+    .btn-sm-ghost:hover {
+      background: var(--surface);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .btn-sm-fill {
+      background: var(--accent);
+      color: #fff;
+      border: 1px solid transparent;
+    }
+
+    .btn-sm-fill:hover {
+      background: #7a72ff;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 768px) {
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (min-width: 900px) {
+      .projects-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        overflow: visible;
+      }
+    }
+
+    /* ===== CONTACT ===== */
+    #contact {
+      background: var(--bg2);
+      background-image: radial-gradient(ellipse 80% 60% at 70% 50%, rgba(108, 99, 255, 0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 20% 80%, rgba(255, 101, 132, 0.08) 0%, transparent 60%);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 4rem;
+      margin-top: 3rem;
+      align-items: start;
+    }
+
+    .contact-info-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+
+    .contact-info-text {
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.2rem;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.25s;
+    }
+
+    .contact-link:hover {
+      border-color: rgba(108, 99, 255, 0.4);
+      background: rgba(108, 99, 255, 0.08);
+      transform: translateX(4px);
+    }
+
+    .cl-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(108, 99, 255, 0.15);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .cl-text {
+      font-size: 0.85rem;
+    }
+
+    .cl-text strong {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.1rem;
+    }
+
+    .cl-text span {
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    /* Contact form */
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-group label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem 1rem;
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      resize: none;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: rgba(108, 99, 255, 0.5);
+      box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.1);
+    }
+
+    .form-group textarea {
+      height: 120px;
+    }
+
+    .form-submit {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.9rem 2rem;
+      background: linear-gradient(135deg, var(--accent), #9b92ff);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s;
+      align-self: flex-start;
+      box-shadow: 0 8px 30px rgba(108, 99, 255, 0.35);
+    }
+
+    .form-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(108, 99, 255, 0.5);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      padding: 2.5rem 5%;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-copy {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .footer-copy span {
+      color: var(--accent);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .footer-links a {
+      width: 36px;
+      height: 36px;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+      border-color: rgba(108, 99, 255, 0.4);
+      background: rgba(108, 99, 255, 0.08);
+    }
+
+    /* ===== SCROLL ANIMATION ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .hero-photo-wrap {
+        order: -1;
+      }
+
+      .hero-photo {
+        width: 240px;
+        height: 300px;
+      }
+
+      .hero-tagline {
+        margin: 0 auto 2rem;
+      }
+
+      .btn-row {
+        justify-content: center;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .about-img-wrap {
+        display: flex;
+        justify-content: center;
+      }
+
+      .about-img {
+        max-width: 280px;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .hero-float-card {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: rgba(10, 10, 15, 0.98);
+        backdrop-filter: blur(20px);
+        padding: 2rem;
+        gap: 1.5rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      footer {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    .cursor {
+      animation: blink 0.7s infinite;
+      color: var(--accent);
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal:nth-child(2) {
+      transition-delay: 0.1s;
+    }
+
+    .reveal:nth-child(3) {
+      transition-delay: 0.2s;
+    }
+
+    .reveal:nth-child(4) {
+      transition-delay: 0.3s;
+    }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <script>emailjs.init("sClbtIbRLSqMfXO_f");</script>
 </head>
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-  const phrases = ["Full-Stack Dev", "Software Dev"];
-  let i = 0, j = 0, deleting = false;
+  document.addEventListener("DOMContentLoaded", function () {
+    const phrases = ["Full-Stack Dev", "Software Dev"];
+    let i = 0, j = 0, deleting = false;
 
-  function type() {
-    const el = document.getElementById("typed-text");
-    if (!el) return;
-    const current = phrases[i];
-    if (!deleting) {
-      el.textContent = current.slice(0, ++j);
-      if (j === current.length) { deleting = true; setTimeout(type, 1500); return; }
-    } else {
-      el.textContent = current.slice(0, --j);
-      if (j === 0) { deleting = false; i = (i + 1) % phrases.length; }
+    function type() {
+      const el = document.getElementById("typed-text");
+      if (!el) return;
+      const current = phrases[i];
+      if (!deleting) {
+        el.textContent = current.slice(0, ++j);
+        if (j === current.length) { deleting = true; setTimeout(type, 1500); return; }
+      } else {
+        el.textContent = current.slice(0, --j);
+        if (j === 0) { deleting = false; i = (i + 1) % phrases.length; }
+      }
+      setTimeout(type, deleting ? 60 : 100);
     }
-    setTimeout(type, deleting ? 60 : 100);
-  }
 
-  type();
-});
+    type();
+  });
 
 </script>
+
 <body>
 
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox">
-  <button class="lightbox-close" onclick="closeLightbox()"><i class="fa fa-times"></i></button>
-  <img src="" id="lightbox-img" alt="Gallery photo"/>
-</div>
-
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">Ankit<span>.</span></div>
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#about">About</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#contact" class="nav-cta">Contact</a></li>
-  </ul>
-  <div class="hamburger" onclick="toggleNav()" id="hamburger">
-    <span></span><span></span><span></span>
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" onclick="closeLightbox()"><i class="fa fa-times"></i></button>
+    <img src="" id="lightbox-img" alt="Gallery photo" />
   </div>
-</nav>
 
-<!-- HERO -->
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">Ankit<span>.</span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact" class="nav-cta">Contact</a></li>
+    </ul>
+    <div class="hamburger" onclick="toggleNav()" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
 
-<section id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-grid">
-    <div class="hero-text">
-      <div class="hero-badge">Available for opportunities</div>
-      <h1 class="hero-name">
-        <span class="line1">Ankit</span><br>
-        <span class="line2">Pandey</span>
-      </h1>
-      <div class="hero-title"><span id="typed-text"></span><span class="cursor">|</span></div>
-      <p class="hero-tagline">Building <em>ideas</em> into digital experiences — one line of code at a time.</p>
-      <div class="btn-row">
-        <a href="#projects" class="btn btn-primary"><i class="fa fa-code"></i> View Projects</a>
-        <a href="#contact" class="btn btn-ghost"><i class="fa fa-paper-plane"></i> Contact Me</a>
+  <!-- HERO -->
+
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid">
+      <div class="hero-text">
+        <div class="hero-badge">Available for opportunities</div>
+        <h1 class="hero-name">
+          <span class="line1">Ankit</span><br>
+          <span class="line2">Pandey</span>
+        </h1>
+        <div class="hero-title"><span id="typed-text"></span><span class="cursor">|</span></div>
+        <p class="hero-tagline">Building <em>ideas</em> into digital experiences — one line of code at a time.</p>
+        <div class="btn-row">
+          <a href="#projects" class="btn btn-primary"><i class="fa fa-code"></i> View Projects</a>
+          <a href="#contact" class="btn btn-ghost"><i class="fa fa-paper-plane"></i> Contact Me</a>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="hero-photo-wrap">
+          <div class="hero-photo-ring"></div>
+          <img src="hero.png" class="hero-photo" alt="Ankit Pandey">
+        </div>
+
+        <div class="hero-float-card c1">
+          <div class="card-label">Focus Area</div>
+          <div class="card-val">Fullstack Dev</div>
+        </div>
+        <div class="hero-float-card c2">
+          <div class="card-label">Status</div>
+          <div class="card-val" style="color:#4ade80;font-size:0.9rem;">Open to Work ✓</div>
+        </div>
       </div>
     </div>
-    <div class = "reveal">
-       <div class="hero-photo-wrap">
-      <div class="hero-photo-ring"></div>
-<img src="hero.png" class="hero-photo" alt="Ankit Pandey">
-    </div>
-   
-      <div class="hero-float-card c1">
-        <div class="card-label">Focus Area</div>
-        <div class="card-val">Fullstack Dev</div>
-      </div>
-      <div class="hero-float-card c2">
-        <div class="card-label">Status</div>
-        <div class="card-val" style="color:#4ade80;font-size:0.9rem;">Open to Work ✓</div>
-      </div>
-    </div>
-  </div>
-</section>
+  </section>
 
-<div class="divider"></div>
+  <div class="divider"></div>
 
-<!-- ABOUT -->
-<section id="about">
-  
-  <div class="section-inner">
-    <div class="section-label">Get to know me</div>
-    <h2 class="section-title">About <span class="accent">Me</span></h2>
-    <div class="about-grid reveal">
-      <div class="about-img-wrap"><div class = "about-img-circle">
-        <img src="about.jpeg" class="about-img" alt="Ankit Pandey">
-      </div>
-        
-       <div class="about-sticker">
-  <div class="num">
-    <i class="fa fa-rocket"></i>
-  </div>
-  <div class="lbl">2 apps shipped</div>
-</div>
-      </div>
-      <div class="about-bio">
-  <p>I'm <strong>Ankit Pandey</strong>, a Full-Stack Developer 
-  in India focused on Android and web apps.</p>
-  
-  <p>I've built Smart DND and a Password Manager, and I'm 
-  currently open to Android and web development roles.</p>
-  
-  <p>I work primarily with Kotlin, React, Node.js, and JavaScript.</p>
-</div>
+  <!-- ABOUT -->
+  <section id="about">
+
+    <div class="section-inner">
+      <div class="section-label">Get to know me</div>
+      <h2 class="section-title">About <span class="accent">Me</span></h2>
+      <div class="about-grid reveal">
+        <div class="about-img-wrap">
+          <div class="about-img-circle">
+            <img src="about.jpeg" class="about-img" alt="Ankit Pandey">
+          </div>
+
+          <div class="about-sticker">
+            <div class="num">
+              <i class="fa fa-rocket"></i>
+            </div>
+            <div class="lbl">2 apps shipped</div>
+          </div>
+        </div>
+        <div class="about-bio">
+          <p>I'm <strong>Ankit Pandey</strong>, a Full-Stack Developer
+            in India focused on Android and web apps.</p>
+
+          <p>I've built Smart DND and a Password Manager, and I'm
+            currently open to Android and web development roles.</p>
+
+          <p>I work primarily with Kotlin, React, Node.js, and JavaScript.</p>
+        </div>
         <div class="interests">
           <span class="interest-tag"> Web Development</span>
           <!-- <span class="interest-tag">Technology</span> -->
@@ -892,812 +1339,954 @@ document.addEventListener("DOMContentLoaded", function() {
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- Projects -->
-<!-- Projects -->
-<section id="projects">
-  <div class="section-inner">
-    <div class="section-label">What I've built</div>
-    <h2 class="section-title">Featured <span class="accent">Projects</span></h2>
-    <p class="section-sub">Two apps built and shipped end-to-end.</p>
-
-    <div class="projects-grid reveal">
-
-      <div class="project-card">
-        <div class="project-img">
-          <span>🔐</span>
-        </div>
-        <div class="project-body">
-          <span class="project-tag">React · MongoDB · Node.js</span>
-          <div class="project-name">PassOP — Password Manager</div>
-          <p class="project-desc">Your passwords, encrypted and accessible only to you. PassOP stores credentials with built-in encryption, keeping your data secure on-device. More features in active development.</p>
-          <div class="project-links">
-            <a href="https://github.com/AnkitCodesHub/passop-mongo" class="btn-sm btn-sm-ghost" target="_blank">
-              <i class="fa-brands fa-github"></i> GitHub
-            </a>
-             <a href="https://passop-mongo-zrll.onrender.com" class="btn-sm btn-sm-fill" target="_blank">
-    <i class="fa fa-arrow-up-right-from-square"></i> Live Demo
-  </a>
-          </div>
-        </div>
-      </div>
-
-      <div class="project-card">
-        <div class="project-img">
-          <img src="smart-dnd.jpeg" alt="Smart DND App">
-        </div>
-        <div class="project-body">
-          <span class="project-tag">Kotlin</span>
-          <div class="project-name">Smart DND — Do Not Disturb</div>
-          <p class="project-desc">Auto Reply, DND Sync, and Auto-Off Timer — set your status to Studying, Sleeping, Driving, or Meeting and Smart DND handles the rest automatically.</p>
-          <div class="project-links">
-            <a href="https://github.com/AnkitCodesHub/smartDND" class="btn-sm btn-sm-ghost" target="_blank">
-              <i class="fa-brands fa-github"></i> GitHub
-            </a>
-          </div>
-        </div>
-      </div>
-
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Skills  -->
- <!-- Skills -->
-<section id="skills">
-  <div class="section-inner">
-    <div class="section-label">What I work with</div>
-    <h2 class="section-title">My <span class="accent">Skills</span></h2>
-    <p class="section-sub">A toolkit built through hands-on learning and real-world projects.</p>
+  <div class="divider"></div>
 
-    <div class="skills-table reveal">
+  <!-- Projects -->
+  <section id="projects">
+    <div class="section-inner">
+      <div class="section-label">What I've built</div>
+      <h2 class="section-title">Featured <span class="accent">Projects</span></h2>
+      <p class="section-sub">Real apps built and shipped end-to-end.</p>
 
-      <div class="skill-row">
-        <span class="skill-category">Languages</span>
-        <div class="skill-tags">
-          <span class="skill-tag">JavaScript</span>
-          <span class="skill-tag">Python</span>
-          <span class="skill-tag">Kotlin</span>
-          <span class="skill-tag">C</span>
-          <span class="skill-tag">C++</span>
+      <div class="projects-grid reveal">
+
+        <!-- PassOP -->
+        <div class="project-card">
+          <div class="project-img"><span>🔐</span></div>
+          <div class="project-body">
+            <span class="project-tag">React · MongoDB · Node.js</span>
+            <div class="project-name">PassOP — Password Manager</div>
+            <p class="project-desc">Your passwords, encrypted and accessible only to you. PassOP stores credentials with
+              built-in encryption, keeping your data secure on-device. More features in active development.</p>
+            <div class="project-links">
+              <a href="https://github.com/AnkitCodesHub/passop-mongo" class="btn-sm btn-sm-ghost" target="_blank"><i
+                  class="fa-brands fa-github"></i> GitHub</a>
+              <a href="https://passop-mongo-zrll.onrender.com" class="btn-sm btn-sm-fill" target="_blank"><i
+                  class="fa fa-arrow-up-right-from-square"></i> Live Demo</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Smart DND -->
+        <div class="project-card">
+          <div class="project-img"><img src="smart-dnd.jpeg" alt="Smart DND App"></div>
+          <div class="project-body">
+            <span class="project-tag">Kotlin</span>
+            <div class="project-name">Smart DND — Do Not Disturb</div>
+            <p class="project-desc">Auto Reply, DND Sync, and Auto-Off Timer — set your status to Studying, Sleeping,
+              Driving, or Meeting and Smart DND handles the rest automatically.</p>
+            <div class="project-links">
+              <a href="smartdnd.apk" class="btn-sm btn-sm-fill" download><i class="fa fa-download"></i> Download APK</a>
+              <a href="https://github.com/AnkitCodesHub/smartDND" class="btn-sm btn-sm-ghost" target="_blank"><i
+                  class="fa-brands fa-github"></i> GitHub</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Infinity Interns -->
+        <div class="project-card">
+          <div class="project-img"><img src="infinity-interns.png" alt="Infinity Interns Platform"></div>
+          <div class="project-body">
+            <span class="project-tag">Laravel · PHP · MySQL · GitHub Actions</span>
+            <div class="project-name">Infinity Interns — Platform Recovery & DevOps</div>
+            <p class="project-desc">Recovered a production education platform from a hostile developer. Audited the
+              server for backdoors, rotated all credentials, and built a CI/CD pipeline from scratch with GitHub
+              Actions. Now the sole developer maintaining the live platform.</p>
+            <div class="project-links">
+              <a href="https://infinityinterns.com" class="btn-sm btn-sm-fill" target="_blank"><i
+                  class="fa fa-arrow-up-right-from-square"></i> Live Site</a>
+            </div>
+          </div>
+        </div>
+        <!-- ConSnow -->
+        <!-- ConSnow -->
+        <div class="project-card">
+          <div class="project-img"><img src="consnow.png" alt="ConSnow app"></div>
+
+          <div class="project-body">
+            <span class="project-tag">Kotlin · Jetpack Compose · NestJS · PostgreSQL</span>
+            <div class="project-name">Consnow — Live Status Sharing</div>
+            <p class="project-desc">See what your closest people are up to without texting. Consnow passively shares
+              live steps, last movement, and when someone last unlocked their phone, so you know if they're awake,
+              active, or offline. Built the Kotlin/Compose app and the NestJS + PostgreSQL backend, with a
+              foreground-service sync loop that survives aggressive OEM battery throttling. Currently in Play Store
+              testing.</p>
+            <div class="project-links">
+              <a href="consnow.apk" class="btn-sm btn-sm-fill" download><i class="fa fa-download"></i> Download APK</a>
+              <a href="https://github.com/AnkitCodesHub/consnow-backend" class="btn-sm btn-sm-ghost" target="_blank"><i
+                  class="fa-brands fa-github"></i> GitHub</a>
+            </div>
+          </div>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="skill-row">
-        <span class="skill-category">Frontend</span>
-        <div class="skill-tags">
-          <span class="skill-tag">React</span>
-          <span class="skill-tag">HTML5</span>
-          <span class="skill-tag">CSS3</span>
-        </div>
-      </div>
+  <!-- Skills  -->
+  <!-- Skills -->
+  <section id="skills">
+    <div class="section-inner">
+      <div class="section-label">What I work with</div>
+      <h2 class="section-title">My <span class="accent">Skills</span></h2>
+      <p class="section-sub">A toolkit built through hands-on learning and real-world projects.</p>
 
-      <div class="skill-row">
-        <span class="skill-category">Backend</span>
-        <div class="skill-tags">
-          <span class="skill-tag">Node.js</span>
-           <span class="skill-tag">Express.js</span>
-        </div>
-      </div>
+      <div class="skills-table reveal">
 
-      <div class="skill-row">
-        <span class="skill-category">Mobile</span>
-        <div class="skill-tags">
-          <span class="skill-tag">Android</span>
-          <span class="skill-tag">Kotlin</span>
-        </div>
-      </div>
-
-      <div class="skill-row">
-        <span class="skill-category">Database</span>
-        <div class="skill-tags">
-          <span class="skill-tag">MongoDB</span>
-          <span class="skill-tag">Firebase</span>
-        </div>
-      </div>
         <div class="skill-row">
-        <span class="skill-category">Tools</span>
-        <div class="skill-tags">
-          <span class="skill-tag">Git</span>
-          <span class="skill-tag">GitHub</span>
-          <span class="skill-tag">VS Code</span>
-           <span class="skill-tag">Android Studio</span>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-<div class="divider"></div>
-<!-- CONTACT -->
-<section id="contact">
-  <div class="section-inner">
-    <div class="section-label">Let's connect</div>
-    <h2 class="section-title">Get in <span class="accent">Touch</span></h2>
-    <p class="section-sub">Have an idea or opportunity? I'd love to hear from you.</p>
-    <div class="contact-grid reveal">
-      <div>
-        <h3 class="contact-info-title">Let's build something together.</h3>
-        <p class="contact-info-text">Whether you have a project in mind, a question about my work, or just want to say hi — my inbox is always open.</p>
-        <div class="contact-links">
-          <a href="mailto:ankitraj5309@gmail.com" class="contact-link">
-            <div class="cl-icon"><i class="fa fa-envelope"></i></div>
-            <div class="cl-text"><strong>Email</strong><span>ankitraj5309@gmail.com</span></div>
-          </a>
-          <a href="https://github.com/AnkitCodesHub" target="_blank" class="contact-link">
-            <div class="cl-icon"><i class="fab fa-github"></i></div>
-            <div class="cl-text"><strong>GitHub</strong><span>github.com/AnkitCodesHub</span></div>
-          </a>
-          <a href="https://www.linkedin.com/in/ankitraj-pandey" target="_blank" class="contact-link">
-            <div class="cl-icon"><i class="fab fa-linkedin-in"></i></div>
-            <div class="cl-text"><strong>LinkedIn</strong><span>linkedin.com/in/ankitraj-pandey</span></div>
-          </a>
-          <a href="https://www.instagram.com/hrishab_22/?hl=en" target="_blank" class="contact-link">
-            <div class="cl-icon"><i class="fab fa-instagram"></i></div>
-            <div class="cl-text"><strong>Instagram</strong><span>@hrishab_22</span></div>
-          </a>
-        </div>
-      </div>
-      <form class="contact-form" onsubmit="submitForm(event)">
-        <div class="form-row">
-          <div class="form-group">
-            <label>Name</label>
-            <input type="text" placeholder="Your name" required/>
-          </div>
-          <div class="form-group">
-            <label>Email</label>
-            <input type="email" placeholder="your@email.com" required/>
+          <span class="skill-category">Languages</span>
+          <div class="skill-tags">
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">Kotlin</span>
+            <span class="skill-tag">C</span>
+            <span class="skill-tag">C++</span>
           </div>
         </div>
-        <div class="form-group">
-          <label>Subject</label>
-          <input type="text" placeholder="What's this about?"/>
+
+        <div class="skill-row">
+          <span class="skill-category">Frontend</span>
+          <div class="skill-tags">
+            <span class="skill-tag">React</span>
+            <span class="skill-tag">HTML5</span>
+            <span class="skill-tag">CSS3</span>
+          </div>
         </div>
-        <div class="form-group">
-          <label>Message</label>
-          <textarea placeholder="Tell me about your project or just say hi..."></textarea>
+
+        <div class="skill-row">
+          <span class="skill-category">Backend</span>
+          <div class="skill-tags">
+            <span class="skill-tag">Node.js</span>
+            <span class="skill-tag">Express.js</span>
+          </div>
         </div>
-        <button type="submit" class="form-submit">
-          <i class="fa fa-paper-plane"></i> Send Message
-        </button>
-      </form>
+
+        <div class="skill-row">
+          <span class="skill-category">Mobile</span>
+          <div class="skill-tags">
+            <span class="skill-tag">Android</span>
+            <span class="skill-tag">Kotlin</span>
+          </div>
+        </div>
+
+        <div class="skill-row">
+          <span class="skill-category">Database</span>
+          <div class="skill-tags">
+            <span class="skill-tag">MongoDB</span>
+            <span class="skill-tag">Firebase</span>
+          </div>
+        </div>
+        <div class="skill-row">
+          <span class="skill-category">Tools</span>
+          <div class="skill-tags">
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">GitHub</span>
+            <span class="skill-tag">VS Code</span>
+            <span class="skill-tag">Android Studio</span>
+          </div>
+        </div>
+
+      </div>
     </div>
-  </div>
-</section>
-<!-- FOOTER -->
-<footer>
-  <p class="footer-copy">© 2026 <span>Ankit Pandey</span> — All Rights Reserved</p>
-  <div class="footer-links">
-    <a href="https://github.com/AnkitCodesHub" target="_blank"><i class="fab fa-github"></i></a>
-    <a href="https://www.linkedin.com/in/ankitraj-pandey" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-    <a href="https://www.instagram.com/hrishab_22/?hl=en" target="_blank"><i class="fab fa-instagram"></i></a>
-    <a href="mailto:ankitraj5309@gmail.com"><i class="fa fa-envelope"></i></a>
-  </div>
-</footer>
-
-<script>
-// ===== HAMBURGER NAV =====
-function toggleNav() {
-  document.getElementById('navLinks').classList.toggle('open');
-}
-
-// ===== LIGHTBOX =====
-function openLightbox(src) {
-  document.getElementById('lightbox-img').src = src;
-  document.getElementById('lightbox').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeLightbox() {
-  document.getElementById('lightbox').classList.remove('open');
-  document.body.style.overflow = '';
-}
-document.getElementById('lightbox').addEventListener('click', function(e) {
-  if (e.target === this) closeLightbox();
-});
-
-// ===== SCROLL REVEAL =====
-const revealEls = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      // Skill bar animation
-      if (e.target.classList.contains('skills-grid') || e.target.closest?.('.skills-grid')) {
-        animateBars();
-      }
-    }
-  });
-}, { threshold: 0.12 });
-revealEls.forEach(el => observer.observe(el));
-
-// Skill bars inside .reveal
-const skillsObserver = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) animateBars();
-  });
-}, { threshold: 0.3 });
-const skillsGrid = document.querySelector('.skills-grid');
-if (skillsGrid) skillsObserver.observe(skillsGrid);
-
-function animateBars() {
-  document.querySelectorAll('.skill-fill').forEach(bar => {
-    bar.style.width = bar.dataset.width;
-  });
-}
-
-// ===== FORM SUBMIT =====
-function submitForm(e) {
-  e.preventDefault();
-  const btn = e.target.querySelector('.form-submit');
-  const form = e.target;
-
-  // Get form values
-  const from_name = form.querySelectorAll('input')[0].value;
-  const from_email = form.querySelectorAll('input')[1].value;
-  const subject = form.querySelectorAll('input')[2].value;
-  const message = form.querySelector('textarea').value;
-
-  // Show loading state
-  btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Sending...';
-  btn.disabled = true;
-
-  const templateParams = {
-    name: from_name,
-    email: from_email,
-    title: subject,
-    message: message
-  };
-
-  // Send message to Ankit
-  Promise.all([
-    emailjs.send("service_bugas7m", "template_2o1fnde", templateParams)
-  ]).then(function() {
-    btn.innerHTML = '<i class="fa fa-check"></i> Message Sent!';
-    btn.style.background = 'linear-gradient(135deg, #4ade80, #22c55e)';
-    btn.disabled = false;
-    form.reset();
-    setTimeout(() => {
-      btn.innerHTML = '<i class="fa fa-paper-plane"></i> Send Message';
-      btn.style.background = '';
-    }, 4000);
-  }).catch(function(error) {
-    const errMsg = error?.text || error?.message || JSON.stringify(error);
-    btn.innerHTML = '<i class="fa fa-times"></i> Error: ' + errMsg;
-    btn.style.background = 'linear-gradient(135deg, #f87171, #ef4444)';
-    btn.style.fontSize = '0.75rem';
-    btn.disabled = false;
-    setTimeout(() => {
-      btn.innerHTML = '<i class="fa fa-paper-plane"></i> Send Message';
-      btn.style.background = '';
-      btn.style.fontSize = '';
-    }, 8000);
-    console.error('EmailJS full error:', JSON.stringify(error));
-  });
-}
-
-// ===== NAV SCROLL EFFECT =====
-window.addEventListener('scroll', () => {
-  document.querySelector('nav').style.padding =
-    window.scrollY > 60 ? '0.8rem 5%' : '1.2rem 5%';
-});
-</script>
-<style>
-/* Chat launcher button */
-#chat-launcher {
-  position: fixed;
-  bottom: 28px;
-  right: 28px;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #6c63ff, #a78bfa);
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 24px rgba(108,99,255,0.5);
-  z-index: 9998;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-#chat-launcher:hover {
-  transform: scale(1.08);
-  box-shadow: 0 6px 32px rgba(108,99,255,0.7);
-}
-#chat-launcher svg { width: 26px; height: 26px; fill: #fff; transition: opacity 0.2s; }
-#chat-launcher .icon-close { display: none; }
-#chat-launcher.open .icon-chat { display: none; }
-#chat-launcher.open .icon-close { display: block; }
-
-/* Chat window */
-#chat-window {
-  position: fixed;
-  bottom: 96px;
-  right: 28px;
-  width: 340px;
-  max-height: 500px;
-  background: rgba(16,16,26,0.96);
-  border: 1px solid rgba(108,99,255,0.25);
-  border-radius: 20px;
-  backdrop-filter: blur(24px);
-  display: flex;
-  flex-direction: column;
-  z-index: 9997;
-  box-shadow: 0 8px 48px rgba(0,0,0,0.6), 0 0 0 1px rgba(108,99,255,0.1);
-  transform: scale(0.92) translateY(12px);
-  opacity: 0;
-  pointer-events: none;
-  transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), opacity 0.2s;
-}
-#chat-window.open {
-  transform: scale(1) translateY(0);
-  opacity: 1;
-  pointer-events: all;
-}
-
-/* Chat header */
-.chat-header {
-  padding: 14px 18px;
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.chat-avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #6c63ff, #a78bfa);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  flex-shrink: 0;
-}
-.chat-header-info { flex: 1; }
-.chat-header-name {
-  font-weight: 600;
-  font-size: 0.9rem;
-  color: #f0f0f5;
-  line-height: 1.2;
-}
-.chat-header-status {
-  font-size: 0.72rem;
-  color: #4ade80;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-.chat-header-status::before {
-  content: '';
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #4ade80;
-  display: inline-block;
-}
-
-/* Messages area */
-.chat-messages {
-  flex: 1;
-  overflow-y: auto;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  max-height: 320px;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(108,99,255,0.3) transparent;
-}
-.chat-messages::-webkit-scrollbar { width: 3px; }
-.chat-messages::-webkit-scrollbar-thumb { background: rgba(108,99,255,0.3); border-radius: 2px; }
-
-/* Message bubbles */
-.msg {
-  max-width: 82%;
-  padding: 9px 13px;
-  border-radius: 14px;
-  font-size: 0.84rem;
-  line-height: 1.5;
-  word-break: break-word;
-}
-.msg.bot {
-  background: rgba(108,99,255,0.12);
-  border: 1px solid rgba(108,99,255,0.2);
-  color: #e0e0ef;
-  align-self: flex-start;
-  border-bottom-left-radius: 4px;
-}
-.msg.user {
-  background: linear-gradient(135deg, #6c63ff, #a78bfa);
-  color: #fff;
-  align-self: flex-end;
-  border-bottom-right-radius: 4px;
-}
-.msg a { color: #a78bfa; text-decoration: underline; }
-
-/* Quick reply chips */
-.quick-replies {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto;
-  gap: 6px;
-  padding: 0 16px 8px;
-  scrollbar-width: none;
-}
-.quick-replies::-webkit-scrollbar { display: none; }
-.qr-chip {
-  background: rgba(108,99,255,0.1);
-  border: 1px solid rgba(108,99,255,0.3);
-  color: #a78bfa;
-  font-size: 0.75rem;
-  padding: 5px 11px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: background 0.15s;
-  font-family: var(--font-body);
-}
-.qr-chip:hover { background: rgba(108,99,255,0.22); }
-
-/* Input area */
-.chat-input-row {
-  padding: 10px 12px;
-  border-top: 1px solid rgba(255,255,255,0.06);
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-#chat-input {
-  flex: 1;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 10px;
-  padding: 8px 12px;
-  color: #f0f0f5;
-  font-size: 0.83rem;
-  font-family: var(--font-body);
-  outline: none;
-  transition: border 0.2s;
-}
-#chat-input::placeholder { color: #555566; }
-#chat-input:focus { border-color: rgba(108,99,255,0.5); }
-#chat-send {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #6c63ff, #a78bfa);
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  transition: opacity 0.2s;
-}
-#chat-send:hover { opacity: 0.85; }
-#chat-send svg { width: 16px; height: 16px; fill: #fff; }
-
-/* Typing indicator */
-.typing-dots {
-  display: flex;
-  gap: 4px;
-  padding: 2px 0;
-  align-items: center;
-}
-.typing-dots span {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #6c63ff;
-  animation: dot-bounce 1.2s infinite;
-}
-.typing-dots span:nth-child(2) { animation-delay: 0.2s; }
-.typing-dots span:nth-child(3) { animation-delay: 0.4s; }
-@keyframes dot-bounce {
-  0%, 60%, 100% { transform: translateY(0); }
-  30% { transform: translateY(-5px); }
-}
-
-/* Pulse ring on launcher */
-#chat-launcher::after {
-  content: '';
-  position: absolute;
-  inset: -4px;
-  border-radius: 50%;
-  border: 2px solid rgba(108,99,255,0.5);
-  animation: pulse-ring 2.5s ease-out infinite;
-}
-@keyframes pulse-ring {
-  0% { transform: scale(1); opacity: 0.8; }
-  80% { transform: scale(1.4); opacity: 0; }
-  100% { opacity: 0; }
-}
-#chat-launcher.open::after { display: none; }
-
-@media (max-width: 400px) {
-  #chat-window { width: calc(100vw - 32px); right: 16px; }
-  #chat-launcher { right: 16px; bottom: 16px; }
-}
-</style>
-<!-- CHATBOT -->
-<!-- Chat HTML -->
-<button id="chat-launcher" aria-label="Open chat">
-  <svg class="icon-chat" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/>
-  </svg>
-  <svg class="icon-close" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-    <path d="M18 6L6 18M6 6l12 12" stroke="#fff" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-  </svg>
-</button>
-
-<div id="chat-window">
-  <div class="chat-header">
-    <div class="chat-avatar">🤖</div>
-    <div class="chat-header-info">
-      <div class="chat-header-name">Ankit's Assistant</div>
-      <div class="chat-header-status">Online now</div>
+  </section>
+  <div class="divider"></div>
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-inner">
+      <div class="section-label">Let's connect</div>
+      <h2 class="section-title">Get in <span class="accent">Touch</span></h2>
+      <p class="section-sub">Have an idea or opportunity? I'd love to hear from you.</p>
+      <div class="contact-grid reveal">
+        <div>
+          <h3 class="contact-info-title">Let's build something together.</h3>
+          <p class="contact-info-text">Whether you have a project in mind, a question about my work, or just want to say
+            hi — my inbox is always open.</p>
+          <div class="contact-links">
+            <a href="mailto:ankitraj5309@gmail.com" class="contact-link">
+              <div class="cl-icon"><i class="fa fa-envelope"></i></div>
+              <div class="cl-text"><strong>Email</strong><span>ankitraj5309@gmail.com</span></div>
+            </a>
+            <a href="https://github.com/AnkitCodesHub" target="_blank" class="contact-link">
+              <div class="cl-icon"><i class="fab fa-github"></i></div>
+              <div class="cl-text"><strong>GitHub</strong><span>github.com/AnkitCodesHub</span></div>
+            </a>
+            <a href="https://www.linkedin.com/in/ankitraj-pandey" target="_blank" class="contact-link">
+              <div class="cl-icon"><i class="fab fa-linkedin-in"></i></div>
+              <div class="cl-text"><strong>LinkedIn</strong><span>linkedin.com/in/ankitraj-pandey</span></div>
+            </a>
+            <a href="https://www.instagram.com/hrishab_22/?hl=en" target="_blank" class="contact-link">
+              <div class="cl-icon"><i class="fab fa-instagram"></i></div>
+              <div class="cl-text"><strong>Instagram</strong><span>@hrishab_22</span></div>
+            </a>
+          </div>
+        </div>
+        <form class="contact-form" onsubmit="submitForm(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" placeholder="Your name" required />
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" placeholder="your@email.com" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Subject</label>
+            <input type="text" placeholder="What's this about?" />
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea placeholder="Tell me about your project or just say hi..."></textarea>
+          </div>
+          <button type="submit" class="form-submit">
+            <i class="fa fa-paper-plane"></i> Send Message
+          </button>
+        </form>
+      </div>
     </div>
-  </div>
-  <div class="chat-messages" id="chat-messages"></div>
-  <div class="quick-replies" id="quick-replies"></div>
-  <div class="chat-input-row">
-    <input id="chat-input" type="text" placeholder="Ask me anything…" autocomplete="off"/>
-    <button id="chat-send">
-      <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>
-    </button>
-  </div>
-</div>
+  </section>
+  <!-- FOOTER -->
+  <footer>
+    <p class="footer-copy">© 2026 <span>Ankit Pandey</span> — All Rights Reserved</p>
+    <div class="footer-links">
+      <a href="https://github.com/AnkitCodesHub" target="_blank"><i class="fab fa-github"></i></a>
+      <a href="https://www.linkedin.com/in/ankitraj-pandey" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://www.instagram.com/hrishab_22/?hl=en" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="mailto:ankitraj5309@gmail.com"><i class="fa fa-envelope"></i></a>
+    </div>
+  </footer>
 
-<script>
-(function() {
-  const launcher = document.getElementById('chat-launcher');
-  const win = document.getElementById('chat-window');
-  const msgs = document.getElementById('chat-messages');
-  const input = document.getElementById('chat-input');
-  const sendBtn = document.getElementById('chat-send');
-  const qrContainer = document.getElementById('quick-replies');
-
-  // ===== KNOWLEDGE BASE =====
-  // Rule: specific entries FIRST so longest-match wins over generic ones
-  const KB = [
-    {
-      keys: ['hi','hello','hey','hii','helo','howdy','sup','yo'],
-      reply: "Hey! 👋 I'm Ankit's assistant. Ask me about his skills, projects, availability, or how to reach him.",
-      followups: ['Skills', 'Projects', 'Contact','fun stuff']
-    },
-     {
-      keys: ['smart dnd','do not disturb','dnd app','dnd project'],
-      reply: "Smart DND is my Android app that intelligently manages your Do Not Disturb mode. 📱<br><br>It schedules DND based on time, location, or calendar events — so your phone goes quiet when it should, automatically, without you lifting a finger.<br><br><a href='https://github.com/AnkitCodesHub/smartDND' target='_blank' style='display:inline-block;margin-top:6px;padding:7px 16px;background:#333;color:#fff;border-radius:8px;text-decoration:none;font-size:0.85rem;font-weight:600;'>🐙 View Code</a>",
-      followups: ['PassOP project', 'Skills I used', 'GitHub & LinkedIn']
-    },
-     {
-      keys: ['passop','password manager','passop project'],
-      reply: "PassOP is my full-stack password manager built with React, Node.js, and MongoDB. 🔐<br><br>It lets users securely store and manage credentials with a clean UI. Building it taught me a lot about auth flows and keeping data safe.<br><br><a href='https://passop-mongo-zrll.onrender.com' target='_blank' style='display:inline-block;margin-top:6px;margin-right:8px;padding:7px 16px;background:#6c63ff;color:#fff;border-radius:8px;text-decoration:none;font-size:0.85rem;font-weight:600;'>🌐 Live Demo</a><a href='https://github.com/AnkitCodesHub/passop-mongo' target='_blank' style='display:inline-block;margin-top:6px;padding:7px 16px;background:#333;color:#fff;border-radius:8px;text-decoration:none;font-size:0.85rem;font-weight:600;'>🐙 View Code</a>",
-      followups: ['Smart DND app', 'Skills I used', 'GitHub & LinkedIn']
-    },
-    {
-      keys: ['project','app','build','built','made','portfolio','what have you built'],
-      reply: "I've shipped 2 real apps so far:<br><br>📱 <b>Smart DND</b> — Android app for intelligent Do Not Disturb scheduling<br>🔐 <b>PassOP</b> — Full-stack password manager (React + Node.js + MongoDB)<br><br>Want details on either one?",
-      followups: ['Smart DND app', 'PassOP project', 'GitHub & LinkedIn']
-    },
-    {
-      keys: ['education','degree','college','university','study','qualification','btech','b.tech','electrical','nawada','academic'],
-      reply: "I hold a B.Tech in Electrical Engineering from Government Engineering College Nawada (2026). 🎓<br><br>The software side is self-taught — I got into Android dev out of curiosity and never stopped.",
-      followups: ['Why coding?', 'Skills', 'Projects']
-    },
-    {
-      keys: ['why','coding','started','got into','passion','journey into','how did you'],
-      reply: "Honest answer? I was an EE student who got curious about Android apps and couldn't stop. 💡<br><br>Started small, shipped real things, and here we are. The mix of logic and building stuff people actually use is what keeps me hooked.",
-      followups: ['Skills', 'Projects', 'Education']
-    },
-      {
-      keys: ['fun stuff','personal','fun','personal questions','about you'],
-      reply: "Ooh, getting personal! 😄 Ask me anything fun — girlfriend, favourite food, chai vs coffee, age, or just ask me to tell a joke. Go ahead!",
-      followups: ['Girlfriend?', 'Favourite food', 'Tell a joke', 'Age?']
-    },
-    {
-      keys: ['skill','tech','stack','language','languages','work with','expertise','proficient','know'],
-      reply: "My core stack:<br><br>🔷 <b>Android</b> — Kotlin, Jetpack, Android SDK<br>🌐 <b>Web</b> — React, Node.js, JavaScript, HTML/CSS<br>🗄️ <b>Backend</b> — REST APIs, Firebase, MongoDB<br>🛠️ <b>Tools</b> — Git, VS Code, Android Studio<br><br>I pick the right tool for the job — not just the trendy one.",
-      followups: ['Favourite tech?', 'Projects', 'Currently working on?']
-    },
-    {
-      keys: ['favourite','favorite','prefer','love to','enjoy','best language','like most'],
-      reply: "Kotlin, hands down. 🎯 Writing Android apps in it feels natural — concise, expressive, safe. For web, React is my go-to. Both let me build real things fast without fighting the language.",
-      followups: ['Skills', 'Projects', 'Currently working on?']
-    },
-    {
-      keys: ['hardest','difficult','challenge','struggled','tough','problem you solved'],
-      reply: "Building Smart DND taught me the most. 💪<br><br>Managing Android's background restrictions, battery optimization, and system-level permissions is genuinely hard — no Stack Overflow answer for every edge case. Shipping it felt like a real win.",
-      followups: ['Smart DND app', 'Skills', 'What makes you different?']
-    },
-    {
-      keys: ['strength','good at','best at','what makes you','different','stand out','unique'],
-      reply: "I build things end-to-end. 🚀<br><br>From designing the UI to wiring the backend to shipping — I own the full picture. Fewer hand-offs, faster iteration, no 'that's not my part' moments.",
-      followups: ['Skills', 'Projects', 'Available for hire?']
-    },
-    {
-      keys: ['working on','currently','right now','latest','new project','building now'],
-      reply: "Right now I'm working on a new Android project, sharpening my DSA skills, and picking up new tech along the way. 🚀<br><br>Also actively looking for my first professional role — if you have something interesting, let's talk!",
-      followups: ['Available for hire?', 'Contact', 'Skills']
-    },
-    {
-      keys: ['freelance','rate','price','cost','charge','how much'],
-      reply: "Yes, I'm open to freelance work! 💼<br><br>Rates depend on scope — drop me a message via the contact form and we'll figure out what works. I move fast and communicate clearly.",
-      followups: ['Contact', 'Skills', 'Projects']
-    },
-    {
-      keys: ['remote','work from home','wfh','onsite','relocate'],
-      reply: "I'm based in India and fully comfortable working remotely 🌐 — async workflows, video calls, the whole thing. Open to onsite discussions too depending on the role.",
-      followups: ['Available for hire?', 'Contact', 'Location?']
-    },
-    {
-      keys: ['internship','intern','fresher','entry level','junior','first job'],
-      reply: "Yes, actively looking! 🙋‍♂️ I'm a fresh grad open to internships and entry-level roles in Android or web dev. I learn fast, ship real code, and don't need hand-holding on the basics.",
-      followups: ['Contact', 'Skills', 'Resume']
-    },
-    {
-      keys: ['available','open','job','opportunity','hire','looking','position','role'],
-      reply: "✅ I'm currently <b>open to work!</b><br><br>Looking for Android and web development roles — full-time, internship, or freelance. Got something interesting? Use the contact form below.",
-      followups: ['Contact', 'Skills', 'Resume']
-    },
-    {
-      keys: ['contact','reach','email','message','connect','touch','dm','whatsapp'],
-      reply: "Best ways to reach me:<br><br>📬 <b>Contact form</b> — bottom of this page, I reply within 24h<br>💼 <b>LinkedIn</b> — in the footer<br>🐙 <b>GitHub</b> — check my code<br><br>Just scroll down! 👇",
-      followups: ['GitHub & LinkedIn', 'Available for hire?', 'Resume']
-    },
-    {
-      keys: ['resume','cv','download','pdf'],
-      reply: "📄 Grab my resume right here:<br><br><a href='resume.pdf' download style='display:inline-block;margin-top:6px;padding:7px 16px;background:#6c63ff;color:#fff;border-radius:8px;text-decoration:none;font-size:0.85rem;font-weight:600;'>⬇ Download Resume (PDF)</a>",
-      followups: ['Skills', 'Projects', 'Contact']
-    },
-    {
-      keys: ['play store','google play','install'],
-      reply: "My apps aren't on the Play Store yet — they're portfolio projects for now. Check the Projects section for GitHub links and demos! 📱",
-      followups: ['Smart DND app', 'PassOP project', 'GitHub & LinkedIn']
-    },
-    {
-      keys: ['location','based','india','where','city','country'],
-      reply: "I'm from India 🇮🇳 — specifically Bihar. Open to remote work globally and onsite opportunities within India.",
-      followups: ['Remote work?', 'Available for hire?', 'Contact']
-    },
-    {
-      keys: ['social','github','linkedin','twitter','link'],
-      reply: "Find me here:<br>🐙 <b>GitHub</b> — my code lives there<br>💼 <b>LinkedIn</b> — for professional stuff<br><br>Links are in the footer! 👇",
-      followups: ['Projects', 'Contact', 'Resume']
-    },
-    {
-      keys: ['experience','background','story','about','who'],
-      reply: "I'm a Full-Stack Developer based in India. I focus on Android (Kotlin) and web (React + Node.js), have shipped 2 real apps, and I'm passionate about building things that actually solve problems — not just coding exercises. 💡<br><br>Fresh grad, eager to break into the industry.",
-      followups: ['Skills', 'Projects', 'Available for hire?']
-    },
-    {
-      keys: ['hobby','hobbies','outside work','free time','besides coding','apart from'],
-      reply: "Outside coding I like exploring how things work — tech, systems, random ideas. I enjoy reading about product design and occasionally break things just to understand them better. 🔧",
-      followups: ['About me', 'Skills', 'Projects']
-    },
-        {
-      keys: ['gf','girlfriend','dating','single','love life','relationship','married'],
-      reply: "Haha, bold question! 😄 Currently in a serious relationship — with VS Code and Android Studio. They never crash my feelings, only my app. 💔🐛<br><br>",
-      followups: ['age', 'food', 'Contact']
-    },
-        {
-      keys: ['food','eat','favourite food','hungry','chai','coffee'],
-      reply: "Chai > Coffee, non-negotiable. ☕<br><br>Best debugging sessions happen with a hot cup of chai and a problem I told myself would take '5 minutes'.",
-      followups: ['joke', 'Projects', 'Contact']
-    },
-        {
-      keys: ['age','old','how old','born','year'],
-      reply: "Fresh out of college — B.Tech 2026 🎓<br><br>Young enough to learn fast, old enough to know AI isn't always right.",
-      followups: ['Education', 'Skills', 'Projects','joke']
-    },
-       {
-      keys: ['roast','joke','funny','make me laugh','entertain'],
-      reply: "Why do developers prefer dark mode? 🌑<br><br>Because light attracts bugs. 🐛<br><br>...I'll see myself out.",
-      followups: ['Skills', 'Projects', 'Available for hire?']
-    },
-
-    {
-      keys: ['thank','thanks','thx','appreciate','great','awesome','nice','cool'],
-      reply: "Happy to help! 😊 Anything else you want to know?",
-      followups: ['Skills', 'Projects', 'Contact', 'Available for hire?']
-    },
-    {
-      keys: ['bye','goodbye','cya','later','done','exit'],
-      reply: "Nice chatting! 👋 If you have an opportunity, reach out via the contact form. Good luck!",
-      followups: ['Contact', 'Resume']
+  <script>
+    // ===== HAMBURGER NAV =====
+    function toggleNav() {
+      document.getElementById('navLinks').classList.toggle('open');
     }
-  ];
 
-  const DEFAULT = "Hmm, not sure about that one. Try asking about my <b>skills</b>, <b>projects</b>, <b>availability</b>, or <b>contact info</b>! 🤔";
-  const QUICK_REPLIES = ['Skills', 'Projects','Contact','fun'];
-
-  // ===== HELPERS =====
-  function addMsg(text, who) {
-    const div = document.createElement('div');
-    div.className = 'msg ' + who;
-    div.innerHTML = text.replace(/\n/g, '<br>');
-    msgs.appendChild(div);
-    msgs.scrollTop = msgs.scrollHeight;
-    return div;
-  }
-
-  function showTyping() {
-    const div = document.createElement('div');
-    div.className = 'msg bot';
-    div.id = 'typing-indicator';
-    div.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
-    msgs.appendChild(div);
-    msgs.scrollTop = msgs.scrollHeight;
-  }
-
-  function removeTyping() {
-    const t = document.getElementById('typing-indicator');
-    if (t) t.remove();
-  }
-
-  // Longest-match wins — avoids generic keys stealing specific queries
-  function getMatchedEntry(text) {
-    const lower = text.toLowerCase();
-    let bestMatch = null;
-    let bestKeyLength = 0;
-    for (const entry of KB) {
-      for (const k of entry.keys) {
-        if (k && lower.includes(k) && k.length > bestKeyLength) {
-          bestMatch = entry;
-          bestKeyLength = k.length;
-        }
-      }
+    // ===== LIGHTBOX =====
+    function openLightbox(src) {
+      document.getElementById('lightbox-img').src = src;
+      document.getElementById('lightbox').classList.add('open');
+      document.body.style.overflow = 'hidden';
     }
-    return bestMatch;
-  }
-
-  function renderQuickReplies(chips) {
-    qrContainer.innerHTML = '';
-    chips.forEach(label => {
-      const btn = document.createElement('button');
-      btn.className = 'qr-chip';
-      btn.textContent = label;
-      btn.onclick = () => handleUserInput(label);
-      qrContainer.appendChild(btn);
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    document.getElementById('lightbox').addEventListener('click', function (e) {
+      if (e.target === this) closeLightbox();
     });
-  }
 
-  function handleUserInput(text) {
-    if (!text.trim()) return;
-    addMsg(text, 'user');
-    input.value = '';
-    qrContainer.innerHTML = '';
-    showTyping();
-    setTimeout(() => {
-      removeTyping();
-      const entry = getMatchedEntry(text);
-      addMsg(entry ? entry.reply : DEFAULT, 'bot');
-      // Show contextual chips from matched entry, fall back to defaults
-      renderQuickReplies(entry && entry.followups ? entry.followups : QUICK_REPLIES);
-    }, 700 + Math.random() * 400);
-  }
+    // ===== SCROLL REVEAL =====
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          // Skill bar animation
+          if (e.target.classList.contains('skills-grid') || e.target.closest?.('.skills-grid')) {
+            animateBars();
+          }
+        }
+      });
+    }, { threshold: 0.12 });
+    revealEls.forEach(el => observer.observe(el));
 
-  // ===== EVENTS =====
-  launcher.addEventListener('click', () => {
-    const isOpen = win.classList.toggle('open');
-    launcher.classList.toggle('open', isOpen);
-    if (isOpen && msgs.children.length === 0) {
-      setTimeout(() => {
-        addMsg("Hey! 👋 I'm Ankit's assistant. Ask me about his skills, projects, or how to hire him!", 'bot');
-        renderQuickReplies(QUICK_REPLIES);
-      }, 250);
+    // Skill bars inside .reveal
+    const skillsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) animateBars();
+      });
+    }, { threshold: 0.3 });
+    const skillsGrid = document.querySelector('.skills-grid');
+    if (skillsGrid) skillsObserver.observe(skillsGrid);
+
+    function animateBars() {
+      document.querySelectorAll('.skill-fill').forEach(bar => {
+        bar.style.width = bar.dataset.width;
+      });
     }
-    if (isOpen) input.focus();
-  });
 
-  sendBtn.addEventListener('click', () => handleUserInput(input.value));
-  input.addEventListener('keydown', e => { if (e.key === 'Enter') handleUserInput(input.value); });
-})();
-</script>
+    // ===== FORM SUBMIT =====
+    function submitForm(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.form-submit');
+      const form = e.target;
+
+      // Get form values
+      const from_name = form.querySelectorAll('input')[0].value;
+      const from_email = form.querySelectorAll('input')[1].value;
+      const subject = form.querySelectorAll('input')[2].value;
+      const message = form.querySelector('textarea').value;
+
+      // Show loading state
+      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Sending...';
+      btn.disabled = true;
+
+      const templateParams = {
+        name: from_name,
+        email: from_email,
+        title: subject,
+        message: message
+      };
+
+      // Send message to Ankit
+      Promise.all([
+        emailjs.send("service_bugas7m", "template_2o1fnde", templateParams)
+      ]).then(function () {
+        btn.innerHTML = '<i class="fa fa-check"></i> Message Sent!';
+        btn.style.background = 'linear-gradient(135deg, #4ade80, #22c55e)';
+        btn.disabled = false;
+        form.reset();
+        setTimeout(() => {
+          btn.innerHTML = '<i class="fa fa-paper-plane"></i> Send Message';
+          btn.style.background = '';
+        }, 4000);
+      }).catch(function (error) {
+        const errMsg = error?.text || error?.message || JSON.stringify(error);
+        btn.innerHTML = '<i class="fa fa-times"></i> Error: ' + errMsg;
+        btn.style.background = 'linear-gradient(135deg, #f87171, #ef4444)';
+        btn.style.fontSize = '0.75rem';
+        btn.disabled = false;
+        setTimeout(() => {
+          btn.innerHTML = '<i class="fa fa-paper-plane"></i> Send Message';
+          btn.style.background = '';
+          btn.style.fontSize = '';
+        }, 8000);
+        console.error('EmailJS full error:', JSON.stringify(error));
+      });
+    }
+
+    // ===== NAV SCROLL EFFECT =====
+    window.addEventListener('scroll', () => {
+      document.querySelector('nav').style.padding =
+        window.scrollY > 60 ? '0.8rem 5%' : '1.2rem 5%';
+    });
+  </script>
+  <style>
+    /* Chat launcher button */
+    #chat-launcher {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6c63ff, #a78bfa);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 24px rgba(108, 99, 255, 0.5);
+      z-index: 9998;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    #chat-launcher:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 32px rgba(108, 99, 255, 0.7);
+    }
+
+    #chat-launcher svg {
+      width: 26px;
+      height: 26px;
+      fill: #fff;
+      transition: opacity 0.2s;
+    }
+
+    #chat-launcher .icon-close {
+      display: none;
+    }
+
+    #chat-launcher.open .icon-chat {
+      display: none;
+    }
+
+    #chat-launcher.open .icon-close {
+      display: block;
+    }
+
+    /* Chat window */
+    #chat-window {
+      position: fixed;
+      bottom: 96px;
+      right: 28px;
+      width: 340px;
+      max-height: 500px;
+      background: rgba(16, 16, 26, 0.96);
+      border: 1px solid rgba(108, 99, 255, 0.25);
+      border-radius: 20px;
+      backdrop-filter: blur(24px);
+      display: flex;
+      flex-direction: column;
+      z-index: 9997;
+      box-shadow: 0 8px 48px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(108, 99, 255, 0.1);
+      transform: scale(0.92) translateY(12px);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s;
+    }
+
+    #chat-window.open {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* Chat header */
+    .chat-header {
+      padding: 14px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .chat-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #6c63ff, #a78bfa);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .chat-header-info {
+      flex: 1;
+    }
+
+    .chat-header-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #f0f0f5;
+      line-height: 1.2;
+    }
+
+    .chat-header-status {
+      font-size: 0.72rem;
+      color: #4ade80;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .chat-header-status::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #4ade80;
+      display: inline-block;
+    }
+
+    /* Messages area */
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 320px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(108, 99, 255, 0.3) transparent;
+    }
+
+    .chat-messages::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    .chat-messages::-webkit-scrollbar-thumb {
+      background: rgba(108, 99, 255, 0.3);
+      border-radius: 2px;
+    }
+
+    /* Message bubbles */
+    .msg {
+      max-width: 82%;
+      padding: 9px 13px;
+      border-radius: 14px;
+      font-size: 0.84rem;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+    .msg.bot {
+      background: rgba(108, 99, 255, 0.12);
+      border: 1px solid rgba(108, 99, 255, 0.2);
+      color: #e0e0ef;
+      align-self: flex-start;
+      border-bottom-left-radius: 4px;
+    }
+
+    .msg.user {
+      background: linear-gradient(135deg, #6c63ff, #a78bfa);
+      color: #fff;
+      align-self: flex-end;
+      border-bottom-right-radius: 4px;
+    }
+
+    .msg a {
+      color: #a78bfa;
+      text-decoration: underline;
+    }
+
+    /* Quick reply chips */
+    .quick-replies {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      gap: 6px;
+      padding: 0 16px 8px;
+      scrollbar-width: none;
+    }
+
+    .quick-replies::-webkit-scrollbar {
+      display: none;
+    }
+
+    .qr-chip {
+      background: rgba(108, 99, 255, 0.1);
+      border: 1px solid rgba(108, 99, 255, 0.3);
+      color: #a78bfa;
+      font-size: 0.75rem;
+      padding: 5px 11px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background 0.15s;
+      font-family: var(--font-body);
+    }
+
+    .qr-chip:hover {
+      background: rgba(108, 99, 255, 0.22);
+    }
+
+    /* Input area */
+    .chat-input-row {
+      padding: 10px 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    #chat-input {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 8px 12px;
+      color: #f0f0f5;
+      font-size: 0.83rem;
+      font-family: var(--font-body);
+      outline: none;
+      transition: border 0.2s;
+    }
+
+    #chat-input::placeholder {
+      color: #555566;
+    }
+
+    #chat-input:focus {
+      border-color: rgba(108, 99, 255, 0.5);
+    }
+
+    #chat-send {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #6c63ff, #a78bfa);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: opacity 0.2s;
+    }
+
+    #chat-send:hover {
+      opacity: 0.85;
+    }
+
+    #chat-send svg {
+      width: 16px;
+      height: 16px;
+      fill: #fff;
+    }
+
+    /* Typing indicator */
+    .typing-dots {
+      display: flex;
+      gap: 4px;
+      padding: 2px 0;
+      align-items: center;
+    }
+
+    .typing-dots span {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #6c63ff;
+      animation: dot-bounce 1.2s infinite;
+    }
+
+    .typing-dots span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .typing-dots span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes dot-bounce {
+
+      0%,
+      60%,
+      100% {
+        transform: translateY(0);
+      }
+
+      30% {
+        transform: translateY(-5px);
+      }
+    }
+
+    /* Pulse ring on launcher */
+    #chat-launcher::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 2px solid rgba(108, 99, 255, 0.5);
+      animation: pulse-ring 2.5s ease-out infinite;
+    }
+
+    @keyframes pulse-ring {
+      0% {
+        transform: scale(1);
+        opacity: 0.8;
+      }
+
+      80% {
+        transform: scale(1.4);
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 0;
+      }
+    }
+
+    #chat-launcher.open::after {
+      display: none;
+    }
+
+    @media (max-width: 400px) {
+      #chat-window {
+        width: calc(100vw - 32px);
+        right: 16px;
+      }
+
+      #chat-launcher {
+        right: 16px;
+        bottom: 16px;
+      }
+    }
+  </style>
+  <!-- CHATBOT -->
+  <!-- Chat HTML -->
+  <button id="chat-launcher" aria-label="Open chat">
+    <svg class="icon-chat" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 2H4a2 2 0 0 0-2 2v18l4-4h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z" />
+    </svg>
+    <svg class="icon-close" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M18 6L6 18M6 6l12 12" stroke="#fff" stroke-width="2.5" stroke-linecap="round" fill="none" />
+    </svg>
+  </button>
+
+  <div id="chat-window">
+    <div class="chat-header">
+      <div class="chat-avatar">🤖</div>
+      <div class="chat-header-info">
+        <div class="chat-header-name">Ankit's Assistant</div>
+        <div class="chat-header-status">Online now</div>
+      </div>
+    </div>
+    <div class="chat-messages" id="chat-messages"></div>
+    <div class="quick-replies" id="quick-replies"></div>
+    <div class="chat-input-row">
+      <input id="chat-input" type="text" placeholder="Ask me anything…" autocomplete="off" />
+      <button id="chat-send">
+        <svg viewBox="0 0 24 24">
+          <path d="M2 21l21-9L2 3v7l15 2-15 2z" />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const launcher = document.getElementById('chat-launcher');
+      const win = document.getElementById('chat-window');
+      const msgs = document.getElementById('chat-messages');
+      const input = document.getElementById('chat-input');
+      const sendBtn = document.getElementById('chat-send');
+      const qrContainer = document.getElementById('quick-replies');
+
+      // ===== KNOWLEDGE BASE =====
+      // Rule: specific entries FIRST so longest-match wins over generic ones
+      const APK_BTN = "<a href='consnow.apk' download style='display:inline-block;margin-top:6px;margin-right:8px;padding:7px 16px;background:#6c63ff;color:#fff;border-radius:8px;text-decoration:none;font-size:0.85rem;font-weight:600;'>⬇ Download APK</a>";
+      const KB = [
+        {
+          keys: ['hi', 'hello', 'hey', 'hii', 'helo', 'howdy', 'sup', 'yo'],
+          reply: "Hey! 👋 I'm Ankit's assistant. Ask me about his skills, projects, availability, or how to reach him.",
+          followups: ['Skills', 'Projects', 'Contact', 'fun stuff']
+        },
+        {
+          keys: ['consnow', 'con snow', 'status sharing', 'live status', 'last unlock', 'last seen', 'step sharing'],
+          reply: "ConSnow is a live status-sharing app 📍<br><br>It passively shares your live steps, last movement, and when you last unlocked your phone with your closest people. They can tell if you're awake, active, or offline without texting.<br><br>Built with Kotlin + Jetpack Compose on Android and a NestJS + PostgreSQL backend with JWT auth. Currently in Play Store testing.<br><br>" + APK_BTN + "<a href='https://github.com/AnkitCodesHub/consnow-backend' target='_blank' style='display:inline-block;margin-top:6px;padding:7px 16px;background:#333;color:#fff;border-radius:8px;text-decoration:none;font-size:0.85rem;font-weight:600;'>🐙 View Code</a>",
+          followups: ['Hardest challenge?', 'Infinity Interns', 'Contact']
+        },
+        {
+          keys: ['infinity interns', 'infinity', 'interns', 'devops', 'ci/cd', 'cicd', 'github actions', 'laravel', 'backdoor', 'hostile', 'recovery', 'server'],
+          reply: "Infinity Interns is a live education platform that I recovered and now maintain as the sole developer 🛠️<br><br>The previous developer turned hostile, so I audited the server for backdoors, rotated every credential, and built a CI/CD pipeline from scratch with GitHub Actions.<br><br>Stack: Laravel, PHP, MySQL, GitHub Actions.<br><br><a href='https://infinityinterns.com' target='_blank' style='display:inline-block;margin-top:6px;padding:7px 16px;background:#6c63ff;color:#fff;border-radius:8px;text-decoration:none;font-size:0.85rem;font-weight:600;'>🌐 Live Site</a>",
+          followups: ['ConSnow', 'Skills', 'Available for hire?']
+        },
+        {
+          keys: ['smart dnd', 'do not disturb', 'dnd app', 'dnd project'],
+          reply: "Smart DND is my Android app that intelligently manages your Do Not Disturb mode. 📱<br><br>It schedules DND based on time, location, or calendar events — so your phone goes quiet when it should, automatically, without you lifting a finger.<br><br><a href='https://github.com/AnkitCodesHub/smartDND' target='_blank' style='display:inline-block;margin-top:6px;padding:7px 16px;background:#333;color:#fff;border-radius:8px;text-decoration:none;font-size:0.85rem;font-weight:600;'>🐙 View Code</a>",
+          followups: ['ConSnow', 'PassOP project', 'GitHub & LinkedIn']
+        },
+        {
+          keys: ['passop', 'password manager', 'passop project'],
+          reply: "PassOP is my full-stack password manager built with React, Node.js, and MongoDB. 🔐<br><br>It lets users securely store and manage credentials with a clean UI. Building it taught me a lot about auth flows and keeping data safe.<br><br><a href='https://passop-mongo-zrll.onrender.com' target='_blank' style='display:inline-block;margin-top:6px;margin-right:8px;padding:7px 16px;background:#6c63ff;color:#fff;border-radius:8px;text-decoration:none;font-size:0.85rem;font-weight:600;'>🌐 Live Demo</a><a href='https://github.com/AnkitCodesHub/passop-mongo' target='_blank' style='display:inline-block;margin-top:6px;padding:7px 16px;background:#333;color:#fff;border-radius:8px;text-decoration:none;font-size:0.85rem;font-weight:600;'>🐙 View Code</a>",
+          followups: ['ConSnow', 'Infinity Interns', 'GitHub & LinkedIn']
+        },
+        {
+          keys: ['project', 'app', 'build', 'built', 'made', 'portfolio', 'what have you built'],
+          reply: "Here's what I've built:<br><br>📍 <b>ConSnow</b> — live status-sharing Android app (Kotlin + NestJS), in Play Store testing<br>🛠️ <b>Infinity Interns</b> — recovered a production platform and built its CI/CD; sole developer now<br>📱 <b>Smart DND</b> — Android app for intelligent Do Not Disturb<br>🔐 <b>PassOP</b> — full-stack password manager (React + Node.js + MongoDB)<br><br>Which one do you want to hear about?",
+          followups: ['ConSnow', 'Infinity Interns', 'Smart DND app', 'PassOP project']
+        },
+        {
+          keys: ['education', 'degree', 'college', 'university', 'study', 'qualification', 'btech', 'b.tech', 'electrical', 'nawada', 'academic'],
+          reply: "I hold a B.Tech in Electrical Engineering from Government Engineering College Nawada (2026). 🎓<br><br>The software side is self-taught — I got into Android dev out of curiosity and never stopped.",
+          followups: ['Why coding?', 'Skills', 'Projects']
+        },
+        {
+          keys: ['why', 'coding', 'started', 'got into', 'passion', 'journey into', 'how did you'],
+          reply: "Honest answer? I was an EE student who got curious about Android apps and couldn't stop. 💡<br><br>Started small, shipped real things, and here we are. The mix of logic and building stuff people actually use is what keeps me hooked.",
+          followups: ['Skills', 'Projects', 'Education']
+        },
+        {
+          keys: ['fun stuff', 'personal', 'fun', 'personal questions', 'about you'],
+          reply: "Ooh, getting personal! 😄 Ask me anything fun — girlfriend, favourite food, chai vs coffee, age, or just ask me to tell a joke. Go ahead!",
+          followups: ['Girlfriend?', 'Favourite food', 'Tell a joke', 'Age?']
+        },
+        {
+          keys: ['skill', 'tech', 'stack', 'language', 'languages', 'work with', 'expertise', 'proficient', 'know'],
+          reply: "My core stack:<br><br>🔷 <b>Android</b> — Kotlin, Jetpack Compose, Room, WorkManager<br>🌐 <b>Web</b> — React, JavaScript, HTML/CSS<br>🗄️ <b>Backend</b> — Node.js, Express, NestJS, Laravel/PHP, REST APIs<br>💾 <b>Databases</b> — PostgreSQL, MySQL, MongoDB, Firebase<br>⚙️ <b>DevOps</b> — GitHub Actions CI/CD, server hardening<br>🛠️ <b>Tools</b> — Git, VS Code, Android Studio<br><br>I pick the right tool for the job — not just the trendy one.",
+          followups: ['Favourite tech?', 'Projects', 'Currently working on?']
+        },
+        {
+          keys: ['favourite', 'favorite', 'prefer', 'love to', 'enjoy', 'best language', 'like most'],
+          reply: "Kotlin, hands down. 🎯 Writing Android apps in it feels natural — concise, expressive, safe. For web, React is my go-to. Both let me build real things fast without fighting the language.",
+          followups: ['Skills', 'Projects', 'Currently working on?']
+        },
+        {
+          keys: ['hardest', 'difficult', 'challenge', 'struggled', 'tough', 'problem you solved'],
+          reply: "Two stand out 💪<br><br><b>ConSnow:</b> Android phones (OnePlus especially) throttle background work to every 30–60+ minutes, which kills live status. I built a sync loop inside a foreground service so updates keep flowing every couple of minutes.<br><br><b>Infinity Interns:</b> taking over a live platform from a hostile developer. I had to audit for backdoors and rotate every credential without taking the site down.",
+          followups: ['ConSnow', 'Infinity Interns', 'What makes you different?']
+        },
+        {
+          keys: ['strength', 'good at', 'best at', 'what makes you', 'different', 'stand out', 'unique'],
+          reply: "I build things end-to-end. 🚀<br><br>From designing the UI to wiring the backend to shipping and maintaining it in production — I own the full picture. Fewer hand-offs, faster iteration, no 'that's not my part' moments.",
+          followups: ['Skills', 'Projects', 'Available for hire?']
+        },
+        {
+          keys: ['working on', 'currently', 'right now', 'latest', 'new project', 'building now'],
+          reply: "Right now I'm getting ConSnow through Play Store testing 📍, maintaining the Infinity Interns platform, and sharpening my DSA skills. 🚀<br><br>Also actively looking for my first full-time role — if you have something interesting, let's talk!",
+          followups: ['ConSnow', 'Available for hire?', 'Contact']
+        },
+        {
+          keys: ['freelance', 'rate', 'price', 'cost', 'charge', 'how much'],
+          reply: "Yes, I'm open to freelance work! 💼<br><br>Rates depend on scope — drop me a message via the contact form and we'll figure out what works. I move fast and communicate clearly.",
+          followups: ['Contact', 'Skills', 'Projects']
+        },
+        {
+          keys: ['remote', 'work from home', 'wfh', 'onsite', 'relocate'],
+          reply: "I'm based in India and fully comfortable working remotely 🌐 — async workflows, video calls, the whole thing. Open to onsite discussions too depending on the role.",
+          followups: ['Available for hire?', 'Contact', 'Location?']
+        },
+        {
+          keys: ['internship', 'intern', 'fresher', 'entry level', 'junior', 'first job'],
+          reply: "Yes, actively looking! 🙋‍♂️ I'm a fresh grad open to internships and entry-level roles in Android or web dev. I learn fast, ship real code, and don't need hand-holding on the basics.",
+          followups: ['Contact', 'Skills', 'Resume']
+        },
+        {
+          keys: ['available', 'open', 'job', 'opportunity', 'hire', 'looking', 'position', 'role'],
+          reply: "✅ I'm currently <b>open to work!</b><br><br>Looking for Android and web development roles — full-time, internship, or freelance. Got something interesting? Use the contact form below.",
+          followups: ['Contact', 'Skills', 'Resume']
+        },
+        {
+          keys: ['contact', 'reach', 'email', 'message', 'connect', 'touch', 'dm', 'whatsapp'],
+          reply: "Best ways to reach me:<br><br>📬 <b>Contact form</b> — bottom of this page, I reply within 24h<br>💼 <b>LinkedIn</b> — in the footer<br>🐙 <b>GitHub</b> — check my code<br><br>Just scroll down! 👇",
+          followups: ['GitHub & LinkedIn', 'Available for hire?', 'Resume']
+        },
+        {
+          keys: ['resume', 'cv', 'pdf', 'download resume', 'download cv'],
+          reply: "📄 Grab my resume right here:<br><br><a href='resume.pdf' download style='display:inline-block;margin-top:6px;padding:7px 16px;background:#6c63ff;color:#fff;border-radius:8px;text-decoration:none;font-size:0.85rem;font-weight:600;'>⬇ Download Resume (PDF)</a>",
+          followups: ['Skills', 'Projects', 'Contact']
+        },
+        {
+          keys: ['play store', 'google play', 'install', 'apk', 'download apk', 'download app', 'try the app'],
+          reply: "ConSnow is in Play Store testing right now 🧪, but you can install it directly on Android:<br><br>" + APK_BTN,
+          followups: ['ConSnow', 'Projects', 'Contact']
+        },
+        {
+          keys: ['location', 'based', 'india', 'where', 'city', 'country'],
+          reply: "I'm from India 🇮🇳 — specifically Bihar. Open to remote work globally and onsite opportunities within India.",
+          followups: ['Remote work?', 'Available for hire?', 'Contact']
+        },
+        {
+          keys: ['social', 'github', 'linkedin', 'twitter', 'link'],
+          reply: "Find me here:<br>🐙 <b>GitHub</b> — my code lives there<br>💼 <b>LinkedIn</b> — for professional stuff<br><br>Links are in the footer! 👇",
+          followups: ['Projects', 'Contact', 'Resume']
+        },
+        {
+          keys: ['experience', 'background', 'story', 'about', 'who'],
+          reply: "I'm a Full-Stack Developer based in India, focused on Android (Kotlin) and web/backend (React, Node.js, NestJS, Laravel). 💡<br><br>I'm the sole developer maintaining the live Infinity Interns platform, and I'm building ConSnow, a live status-sharing app now in Play Store testing.<br><br>Fresh grad, eager to break into the industry.",
+          followups: ['Projects', 'Skills', 'Available for hire?']
+        },
+        {
+          keys: ['hobby', 'hobbies', 'outside work', 'free time', 'besides coding', 'apart from'],
+          reply: "Outside coding I like exploring how things work — tech, systems, random ideas. I enjoy reading about product design and occasionally break things just to understand them better. 🔧",
+          followups: ['About me', 'Skills', 'Projects']
+        },
+        {
+          keys: ['gf', 'girlfriend', 'dating', 'single', 'love life', 'relationship', 'married'],
+          reply: "Haha, bold question! 😄 Currently in a serious relationship — with VS Code and Android Studio. They never crash my feelings, only my app. 💔🐛",
+          followups: ['age', 'food', 'Contact']
+        },
+        {
+          keys: ['food', 'eat', 'favourite food', 'hungry', 'chai', 'coffee'],
+          reply: "Chai > Coffee, non-negotiable. ☕<br><br>Best debugging sessions happen with a hot cup of chai and a problem I told myself would take '5 minutes'.",
+          followups: ['joke', 'Projects', 'Contact']
+        },
+        {
+          keys: ['age', 'old', 'how old', 'born', 'year'],
+          reply: "Fresh out of college — B.Tech 2026 🎓<br><br>Young enough to learn fast, old enough to know AI isn't always right.",
+          followups: ['Education', 'Skills', 'Projects', 'joke']
+        },
+        {
+          keys: ['roast', 'joke', 'funny', 'make me laugh', 'entertain'],
+          reply: "Why do developers prefer dark mode? 🌑<br><br>Because light attracts bugs. 🐛<br><br>...I'll see myself out.",
+          followups: ['Skills', 'Projects', 'Available for hire?']
+        },
+        {
+          keys: ['thank', 'thanks', 'thx', 'appreciate', 'great', 'awesome', 'nice', 'cool'],
+          reply: "Happy to help! 😊 Anything else you want to know?",
+          followups: ['Skills', 'Projects', 'Contact', 'Available for hire?']
+        },
+        {
+          keys: ['bye', 'goodbye', 'cya', 'later', 'done', 'exit'],
+          reply: "Nice chatting! 👋 If you have an opportunity, reach out via the contact form. Good luck!",
+          followups: ['Contact', 'Resume']
+        }
+      ];
+
+      const DEFAULT = "Hmm, not sure about that one. Try asking about my <b>skills</b>, <b>projects</b>, <b>availability</b>, or <b>contact info</b>! 🤔";
+      const QUICK_REPLIES = ['Skills', 'Projects', 'Contact', 'fun'];
+
+      // ===== HELPERS =====
+      function addMsg(text, who) {
+        const div = document.createElement('div');
+        div.className = 'msg ' + who;
+        div.innerHTML = text.replace(/\n/g, '<br>');
+        msgs.appendChild(div);
+        msgs.scrollTop = msgs.scrollHeight;
+        return div;
+      }
+
+      function showTyping() {
+        const div = document.createElement('div');
+        div.className = 'msg bot';
+        div.id = 'typing-indicator';
+        div.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+        msgs.appendChild(div);
+        msgs.scrollTop = msgs.scrollHeight;
+      }
+
+      function removeTyping() {
+        const t = document.getElementById('typing-indicator');
+        if (t) t.remove();
+      }
+
+      // Longest-match wins — avoids generic keys stealing specific queries
+      function getMatchedEntry(text) {
+        const lower = text.toLowerCase();
+        let bestMatch = null;
+        let bestKeyLength = 0;
+        for (const entry of KB) {
+          for (const k of entry.keys) {
+            if (k && lower.includes(k) && k.length > bestKeyLength) {
+              bestMatch = entry;
+              bestKeyLength = k.length;
+            }
+          }
+        }
+        return bestMatch;
+      }
+
+      function renderQuickReplies(chips) {
+        qrContainer.innerHTML = '';
+        chips.forEach(label => {
+          const btn = document.createElement('button');
+          btn.className = 'qr-chip';
+          btn.textContent = label;
+          btn.onclick = () => handleUserInput(label);
+          qrContainer.appendChild(btn);
+        });
+      }
+
+      function handleUserInput(text) {
+        if (!text.trim()) return;
+        addMsg(text, 'user');
+        input.value = '';
+        qrContainer.innerHTML = '';
+        showTyping();
+        setTimeout(() => {
+          removeTyping();
+          const entry = getMatchedEntry(text);
+          addMsg(entry ? entry.reply : DEFAULT, 'bot');
+          // Show contextual chips from matched entry, fall back to defaults
+          renderQuickReplies(entry && entry.followups ? entry.followups : QUICK_REPLIES);
+        }, 700 + Math.random() * 400);
+      }
+
+      // ===== EVENTS =====
+      launcher.addEventListener('click', () => {
+        const isOpen = win.classList.toggle('open');
+        launcher.classList.toggle('open', isOpen);
+        if (isOpen && msgs.children.length === 0) {
+          setTimeout(() => {
+            addMsg("Hey! 👋 I'm Ankit's assistant. Ask me about his skills, projects, or how to hire him!", 'bot');
+            renderQuickReplies(QUICK_REPLIES);
+          }, 250);
+        }
+        if (isOpen) input.focus();
+      });
+
+      sendBtn.addEventListener('click', () => handleUserInput(input.value));
+      input.addEventListener('keydown', e => { if (e.key === 'Enter') handleUserInput(input.value); });
+    })();
+  </script>
 </body>
 
 </html>
