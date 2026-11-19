@@ -323,6 +323,34 @@
       font-size: 20px;
       color: var(--text);
       margin-bottom: 16px;
+      min-height: 1.6em;
+    }
+
+    /* Typing cursor next to the hero title */
+    .type-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.1em;
+      margin-left: 3px;
+      vertical-align: -0.15em;
+      background: var(--accent);
+      animation: cursor-blink 1s steps(1) infinite;
+    }
+
+    .type-cursor.is-typing {
+      animation: none;
+    }
+
+    @keyframes cursor-blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .type-cursor {
+        display: none;
+      }
     }
 
     .hero-tagline {
@@ -1322,7 +1350,7 @@
       <div class="hero-text">
         <div class="status intro" style="--i:0"><span class="live-dot"></span>Open to Android and web roles</div>
         <h1 class="hero-name intro" style="--i:1" data-decrypt>Ankit Pandey</h1>
-        <p class="hero-title intro" style="--i:2">Full-stack developer, Android and web</p>
+        <p class="hero-title intro" style="--i:2"><span id="typed-text">Full-stack developer</span><span class="type-cursor" aria-hidden="true"></span></p>
         <p class="hero-tagline intro" style="--i:3">I build apps end to end, from the Kotlin client to the Node.js backend, then ship them and keep them running in production</p>
         <div class="btn-row intro" style="--i:4">
           <a href="#projects" class="btn btn-primary">View projects</a>
@@ -2480,6 +2508,51 @@
         try { saved = localStorage.getItem('theme'); } catch (err) {}
         if (!saved) apply(e.matches ? 'light' : 'dark', true);
       });
+    })();
+  </script>
+  <script>
+    /* Hero title types and erases each phrase in turn */
+    (function () {
+      const el = document.getElementById('typed-text');
+      const cursor = el && el.nextElementSibling;
+      if (!el) return;
+
+      // Edit this list to change the phrases
+      const phrases = ['Full-stack developer', 'Android developer', 'Web developer'];
+      const TYPE_SPEED = 70;     // ms per letter while typing
+      const ERASE_SPEED = 40;    // ms per letter while erasing
+      const HOLD = 1800;         // ms a finished phrase stays on screen
+      const GAP = 400;           // ms of empty line before the next phrase
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+      let p = 0, j = phrases[0].length, deleting = false;
+
+      function tick() {
+        const current = phrases[p];
+        cursor.classList.add('is-typing');
+        if (deleting) {
+          el.textContent = current.slice(0, --j);
+          if (j === 0) {
+            deleting = false;
+            p = (p + 1) % phrases.length;
+            cursor.classList.remove('is-typing');
+            return setTimeout(tick, GAP);
+          }
+          return setTimeout(tick, ERASE_SPEED);
+        }
+        el.textContent = current.slice(0, ++j);
+        if (j === current.length) {
+          deleting = true;
+          cursor.classList.remove('is-typing');
+          return setTimeout(tick, HOLD);
+        }
+        setTimeout(tick, TYPE_SPEED);
+      }
+
+      // The first phrase is already on screen, so start by holding it, then erase
+      deleting = true;
+      setTimeout(tick, HOLD + 1200);
     })();
   </script>
 </body>
