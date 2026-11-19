@@ -31,8 +31,12 @@
       --text: #ededed;
       --text-2: #a1a1a6;
       --muted: #85858b;
-      --accent: #46c487;
-      --accent-ink: #0c2016;
+      --accent: #c6f24e;
+      --accent-hover: #d4f76e;
+      --accent-text: #c6f24e;
+      --accent-dot: #c6f24e;
+      --accent-soft: rgba(198, 242, 78, 0.16);
+      --accent-ink: #1b2408;
       --negative: #e5484d;
       --on-primary: #141415;
       --primary-hover: #ffffff;
@@ -47,7 +51,7 @@
       --dot-gray: #3a3a3d;
       --placeholder: #6a6a70;
       --spot-fill: rgba(237, 237, 237, 0.06);
-      --spot-edge: rgba(237, 237, 237, 0.28);
+      --spot-edge: rgba(198, 242, 78, 0.38);
       color-scheme: dark;
       --ease: cubic-bezier(0.22, 1, 0.36, 1);
       --font-body: 'Geist', system-ui, -apple-system, sans-serif;
@@ -65,8 +69,12 @@
       --text: #171717;
       --text-2: #525252;
       --muted: #737373;
-      --accent: #178a55;
-      --accent-ink: #ffffff;
+      --accent: #b8e840;
+      --accent-hover: #a9dc2c;
+      --accent-text: #4d7c0f;
+      --accent-dot: #65a30d;
+      --accent-soft: rgba(101, 163, 13, 0.18);
+      --accent-ink: #1b2408;
       --negative: #dc2626;
       --on-primary: #fafafa;
       --primary-hover: #000000;
@@ -81,7 +89,7 @@
       --dot-gray: #d4d4d8;
       --placeholder: #a1a1aa;
       --spot-fill: rgba(23, 23, 23, 0.035);
-      --spot-edge: rgba(23, 23, 23, 0.2);
+      --spot-edge: rgba(101, 163, 13, 0.4);
       color-scheme: light;
     }
 
@@ -117,7 +125,7 @@
     button:focus-visible,
     input:focus-visible,
     textarea:focus-visible {
-      outline: 2px solid var(--accent);
+      outline: 2px solid var(--accent-text);
       outline-offset: 2px;
     }
 
@@ -126,13 +134,18 @@
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 0 3px rgba(70, 196, 135, 0.16);
+      background: var(--accent-dot);
+      box-shadow: 0 0 0 3px var(--accent-soft);
       flex-shrink: 0;
     }
 
     .lightbox {
       display: none;
+    }
+
+    ::selection {
+      background: var(--accent);
+      color: var(--accent-ink);
     }
 
     /* ===== NAV ===== */
@@ -333,7 +346,7 @@
       height: 1.1em;
       margin-left: 3px;
       vertical-align: -0.15em;
-      background: var(--accent);
+      background: var(--accent-dot);
       animation: cursor-blink 1s steps(1) infinite;
     }
 
@@ -386,12 +399,12 @@
     }
 
     .btn-primary {
-      background: var(--text);
-      color: var(--on-primary);
+      background: var(--accent);
+      color: var(--accent-ink);
     }
 
     .btn-primary:hover {
-      background: var(--primary-hover);
+      background: var(--accent-hover);
     }
 
     .btn-ghost {
@@ -455,7 +468,7 @@
     .section-label {
       font-family: var(--font-mono);
       font-size: 13px;
-      color: var(--muted);
+      color: var(--accent-text);
       margin-bottom: 12px;
     }
 
@@ -508,7 +521,7 @@
       font-size: 32px;
       font-weight: 500;
       line-height: 1;
-      color: var(--accent);
+      color: var(--accent-text);
       font-variant-numeric: tabular-nums;
       margin-bottom: 8px;
     }
@@ -978,7 +991,7 @@
 
     .form-group input:focus,
     .form-group textarea:focus {
-      border-color: var(--accent);
+      border-color: var(--accent-text);
     }
 
     .form-group textarea {
@@ -992,8 +1005,8 @@
       gap: 8px;
       height: 44px;
       padding: 0 20px;
-      background: var(--text);
-      color: var(--on-primary);
+      background: var(--accent);
+      color: var(--accent-ink);
       border: none;
       border-radius: 10px;
       font-family: var(--font-body);
@@ -1004,7 +1017,7 @@
     }
 
     .form-submit:hover {
-      background: var(--primary-hover);
+      background: var(--accent-hover);
     }
 
     .form-submit:active {
@@ -1163,7 +1176,7 @@
       right: 0;
       bottom: -6px;
       height: 1px;
-      background: var(--text);
+      background: var(--accent-dot);
       transform: scaleX(0);
       transform-origin: left;
       transition: transform 250ms var(--ease);
@@ -1852,7 +1865,7 @@
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: var(--accent);
+      background: var(--accent-dot);
     }
 
     .chat-messages {
@@ -1884,8 +1897,8 @@
     }
 
     .msg.user {
-      background: var(--text);
-      color: var(--on-primary);
+      background: var(--accent);
+      color: var(--accent-ink);
       align-self: flex-end;
       border-bottom-right-radius: 4px;
     }
@@ -1960,14 +1973,14 @@
     }
 
     #chat-input:focus {
-      border-color: var(--accent);
+      border-color: var(--accent-text);
     }
 
     #chat-send {
       width: 36px;
       height: 36px;
       border-radius: 8px;
-      background: var(--text);
+      background: var(--accent);
       border: none;
       cursor: pointer;
       display: flex;
@@ -1978,13 +1991,13 @@
     }
 
     #chat-send:hover {
-      background: var(--primary-hover);
+      background: var(--accent-hover);
     }
 
     #chat-send svg {
       width: 16px;
       height: 16px;
-      fill: var(--on-primary);
+      fill: var(--accent-ink);
     }
 
     /* Typing indicator: a quiet fade, no bounce */
