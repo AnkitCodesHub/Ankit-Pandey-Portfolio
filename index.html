@@ -11,6 +11,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23141415'/><text x='16' y='22' font-family='system-ui,sans-serif' font-size='16' font-weight='500' fill='%23ededed' text-anchor='middle'>AP</text></svg>">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script>
+    (function () {
+      var saved = null;
+      try { saved = localStorage.getItem('theme'); } catch (e) {}
+      var light = window.matchMedia('(prefers-color-scheme: light)').matches;
+      document.documentElement.dataset.theme = saved || (light ? 'light' : 'dark');
+    })();
+  </script>
   <style>
     /* Design tokens. Redesign pass based on unslop by Damir Sokolovsky (@heydamir), CC BY 4.0 */
     :root {
@@ -26,9 +34,61 @@
       --accent: #46c487;
       --accent-ink: #0c2016;
       --negative: #e5484d;
+      --on-primary: #141415;
+      --primary-hover: #ffffff;
+      --raised-hover: var(--raised-hover);
+      --nav-bg: rgba(20, 20, 21, 0.92);
+      --highlight: rgba(255, 255, 255, 0.06);
+      --bezel: #2a2a2d;
+      --frame-border: rgba(255, 255, 255, 0.1);
+      --media-shadow: var(--media-shadow);
+      --float-shadow: var(--float-shadow);
+      --pop-shadow: var(--pop-shadow);
+      --dot-gray: #3a3a3d;
+      --placeholder: #6a6a70;
+      --spot-fill: rgba(237, 237, 237, 0.06);
+      --spot-edge: rgba(237, 237, 237, 0.28);
+      color-scheme: dark;
       --ease: cubic-bezier(0.22, 1, 0.36, 1);
       --font-body: 'Geist', system-ui, -apple-system, sans-serif;
       --font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    /* Light theme: same roles, graphite light ramp */
+    :root[data-theme="light"] {
+      --bg-deep: #f4f4f5;
+      --bg: #fafafa;
+      --card: #ffffff;
+      --raised: #f4f4f5;
+      --border: rgba(23, 23, 23, 0.08);
+      --border-strong: rgba(23, 23, 23, 0.14);
+      --text: #171717;
+      --text-2: #525252;
+      --muted: #737373;
+      --accent: #178a55;
+      --accent-ink: #ffffff;
+      --negative: #dc2626;
+      --on-primary: #fafafa;
+      --primary-hover: #000000;
+      --raised-hover: #ebebed;
+      --nav-bg: rgba(250, 250, 250, 0.92);
+      --highlight: rgba(255, 255, 255, 0.8);
+      --bezel: #1c1c1e;
+      --frame-border: rgba(23, 23, 23, 0.12);
+      --media-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+      --float-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      --pop-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+      --dot-gray: #d4d4d8;
+      --placeholder: #a1a1aa;
+      --spot-fill: rgba(23, 23, 23, 0.035);
+      --spot-edge: rgba(23, 23, 23, 0.2);
+      color-scheme: light;
+    }
+
+    /* Colors fade briefly while switching themes */
+    .theme-switching,
+    .theme-switching * {
+      transition: background-color 250ms var(--ease), color 250ms var(--ease), border-color 250ms var(--ease), fill 250ms var(--ease) !important;
     }
 
     *,
@@ -87,7 +147,7 @@
       justify-content: space-between;
       align-items: center;
       padding: 0 max(24px, calc((100vw - 1152px) / 2));
-      background: rgba(20, 20, 21, 0.92);
+      background: var(--nav-bg);
       border-bottom: 1px solid var(--border);
     }
 
@@ -129,7 +189,51 @@
     }
 
     .nav-links a.nav-cta:hover {
-      background: #2b2b2e;
+      background: var(--raised-hover);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .theme-toggle {
+      width: 36px;
+      height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-2);
+      cursor: pointer;
+      transition: color 150ms var(--ease), background-color 150ms var(--ease);
+    }
+
+    .theme-toggle:hover {
+      color: var(--text);
+      background: var(--raised);
+    }
+
+    .theme-toggle svg {
+      width: 16px;
+      height: 16px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .theme-toggle .icon-moon,
+    :root[data-theme="light"] .theme-toggle .icon-sun {
+      display: none;
+    }
+
+    :root[data-theme="light"] .theme-toggle .icon-moon {
+      display: block;
     }
 
     .hamburger {
@@ -255,22 +359,22 @@
 
     .btn-primary {
       background: var(--text);
-      color: #141415;
+      color: var(--on-primary);
     }
 
     .btn-primary:hover {
-      background: #ffffff;
+      background: var(--primary-hover);
     }
 
     .btn-ghost {
       background: var(--raised);
       color: var(--text);
       border: 1px solid var(--border);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      box-shadow: inset 0 1px 0 var(--highlight);
     }
 
     .btn-ghost:hover {
-      background: #2b2b2e;
+      background: var(--raised-hover);
     }
 
     .hero-photo-wrap {
@@ -465,10 +569,10 @@
       top: 32px;
       width: 200px;
       padding: 6px;
-      background: #2a2a2d;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: var(--bezel);
+      border: 1px solid var(--frame-border);
       border-radius: 32px;
-      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      box-shadow: var(--media-shadow), inset 0 1px 0 var(--highlight);
     }
 
     .phone img {
@@ -485,11 +589,11 @@
     .browser {
       height: 100%;
       background: var(--raised);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--frame-border);
       border-bottom: none;
       border-radius: 12px 12px 0 0;
       overflow: hidden;
-      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
+      box-shadow: var(--media-shadow);
     }
 
     .browser-bar {
@@ -505,7 +609,7 @@
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: #3a3a3d;
+      background: var(--dot-gray);
     }
 
     .browser-bar em {
@@ -539,10 +643,10 @@
       width: 100%;
       max-width: 340px;
       background: var(--card);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid var(--frame-border);
       border-radius: 12px;
       padding: 8px;
-      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
+      box-shadow: var(--media-shadow);
     }
 
     .vault-head {
@@ -655,11 +759,11 @@
 
     .btn-sm-fill {
       background: var(--text);
-      color: #141415;
+      color: var(--on-primary);
     }
 
     .btn-sm-fill:hover {
-      background: #ffffff;
+      background: var(--primary-hover);
     }
 
     .btn-sm-ghost {
@@ -673,7 +777,7 @@
     }
 
     .btn-sm-ghost:hover {
-      background: #2b2b2e;
+      background: var(--raised-hover);
     }
 
     /* ===== SKILLS ===== */
@@ -841,7 +945,7 @@
 
     .form-group input::placeholder,
     .form-group textarea::placeholder {
-      color: #6a6a70;
+      color: var(--placeholder);
     }
 
     .form-group input:focus,
@@ -861,7 +965,7 @@
       height: 44px;
       padding: 0 20px;
       background: var(--text);
-      color: #141415;
+      color: var(--on-primary);
       border: none;
       border-radius: 10px;
       font-family: var(--font-body);
@@ -872,7 +976,7 @@
     }
 
     .form-submit:hover {
-      background: #ffffff;
+      background: var(--primary-hover);
     }
 
     .form-submit:active {
@@ -984,13 +1088,13 @@
 
     .project-card::before {
       z-index: 0;
-      background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(237, 237, 237, 0.06), transparent 60%);
+      background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), var(--spot-fill), transparent 60%);
     }
 
     .project-card::after {
       z-index: 2;
       padding: 1px;
-      background: radial-gradient(280px circle at var(--mx, 50%) var(--my, 50%), rgba(237, 237, 237, 0.28), transparent 70%);
+      background: radial-gradient(280px circle at var(--mx, 50%) var(--my, 50%), var(--spot-edge), transparent 70%);
       -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
       -webkit-mask-composite: xor;
       mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
@@ -1195,15 +1299,21 @@
   <!-- NAV -->
   <nav>
     <a href="#hero" class="nav-logo">Ankit Pandey</a>
+    <div class="nav-right">
     <ul class="nav-links" id="navLinks">
       <li><a href="#about">About</a></li>
       <li><a href="#skills">Skills</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#contact" class="nav-cta">Contact</a></li>
     </ul>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light mode">
+      <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+    </button>
     <button class="hamburger" onclick="toggleNav()" id="hamburger" aria-label="Menu">
       <span></span><span></span>
     </button>
+    </div>
   </nav>
 
   <!-- HERO -->
@@ -1605,13 +1715,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      box-shadow: var(--float-shadow), inset 0 1px 0 var(--highlight);
       z-index: 9998;
       transition: background-color 150ms var(--ease), transform 120ms var(--ease);
     }
 
     #chat-launcher:hover {
-      background: #2b2b2e;
+      background: var(--raised-hover);
     }
 
     #chat-launcher:active {
@@ -1654,7 +1764,7 @@
       display: flex;
       flex-direction: column;
       z-index: 9997;
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.5);
+      box-shadow: var(--pop-shadow);
       transform: translateY(8px);
       opacity: 0;
       pointer-events: none;
@@ -1747,7 +1857,7 @@
 
     .msg.user {
       background: var(--text);
-      color: #141415;
+      color: var(--on-primary);
       align-self: flex-end;
       border-bottom-right-radius: 4px;
     }
@@ -1818,7 +1928,7 @@
     }
 
     #chat-input::placeholder {
-      color: #6a6a70;
+      color: var(--placeholder);
     }
 
     #chat-input:focus {
@@ -1840,13 +1950,13 @@
     }
 
     #chat-send:hover {
-      background: #ffffff;
+      background: var(--primary-hover);
     }
 
     #chat-send svg {
       width: 16px;
       height: 16px;
-      fill: #141415;
+      fill: var(--on-primary);
     }
 
     /* Typing indicator: a quiet fade, no bounce */
@@ -1936,7 +2046,7 @@
 
       // ===== KNOWLEDGE BASE =====
       // Rule: specific entries FIRST so longest-match wins over generic ones
-      const APK_BTN = "<a href='consnow.apk' download style='display:inline-block;margin-top:6px;margin-right:8px;padding:6px 12px;background:#ededed;color:#141415;border-radius:6px;text-decoration:none;font-size:12px;font-weight:500;'> Download APK</a>";
+      const APK_BTN = "<a href='consnow.apk' download style='display:inline-block;margin-top:6px;margin-right:8px;padding:6px 12px;background:var(--text);color:var(--on-primary);border-radius:6px;text-decoration:none;font-size:12px;font-weight:500;'> Download APK</a>";
       const KB = [
         {
           keys: ['hi', 'hello', 'hey', 'hii', 'helo', 'howdy', 'sup', 'yo'],
@@ -1950,7 +2060,7 @@
         },
         {
           keys: ['infinity interns', 'infinity', 'interns', 'devops', 'ci/cd', 'cicd', 'github actions', 'laravel', 'backdoor', 'hostile', 'recovery', 'server'],
-          reply: "Infinity Interns is a live education platform that I recovered and now maintain as the sole developer<br><br>The previous developer turned hostile, so I audited the server for backdoors, rotated every credential, and built a CI/CD pipeline from scratch with GitHub Actions.<br><br>Stack: Laravel, PHP, MySQL, GitHub Actions.<br><br><a href='https://infinityinterns.com' target='_blank' style='display:inline-block;margin-top:6px;margin-right:8px;padding:6px 12px;background:#ededed;color:#141415;border-radius:6px;text-decoration:none;font-size:12px;font-weight:500;'> Live Site</a>",
+          reply: "Infinity Interns is a live education platform that I recovered and now maintain as the sole developer<br><br>The previous developer turned hostile, so I audited the server for backdoors, rotated every credential, and built a CI/CD pipeline from scratch with GitHub Actions.<br><br>Stack: Laravel, PHP, MySQL, GitHub Actions.<br><br><a href='https://infinityinterns.com' target='_blank' style='display:inline-block;margin-top:6px;margin-right:8px;padding:6px 12px;background:var(--text);color:var(--on-primary);border-radius:6px;text-decoration:none;font-size:12px;font-weight:500;'> Live Site</a>",
           followups: ['ConSnow', 'Skills', 'Available for hire?']
         },
         {
@@ -1960,7 +2070,7 @@
         },
         {
           keys: ['passop', 'password manager', 'passop project'],
-          reply: "PassOP is my full-stack password manager built with React, Node.js, and MongoDB.<br><br>It lets users securely store and manage credentials with a clean UI. Building it taught me a lot about auth flows and keeping data safe.<br><br><a href='https://passop-mongo-zrll.onrender.com' target='_blank' style='display:inline-block;margin-top:6px;margin-right:8px;padding:6px 12px;background:#ededed;color:#141415;border-radius:6px;text-decoration:none;font-size:12px;font-weight:500;'> Live Demo</a><a href='https://github.com/AnkitCodesHub/passop-mongo' target='_blank' style='display:inline-block;margin-top:6px;padding:7px 16px;background:#333;color:#fff;border-radius:8px;text-decoration:none;font-size:0.85rem;font-weight:600;'> View Code</a>",
+          reply: "PassOP is my full-stack password manager built with React, Node.js, and MongoDB.<br><br>It lets users securely store and manage credentials with a clean UI. Building it taught me a lot about auth flows and keeping data safe.<br><br><a href='https://passop-mongo-zrll.onrender.com' target='_blank' style='display:inline-block;margin-top:6px;margin-right:8px;padding:6px 12px;background:var(--text);color:var(--on-primary);border-radius:6px;text-decoration:none;font-size:12px;font-weight:500;'> Live Demo</a><a href='https://github.com/AnkitCodesHub/passop-mongo' target='_blank' style='display:inline-block;margin-top:6px;padding:7px 16px;background:#333;color:#fff;border-radius:8px;text-decoration:none;font-size:0.85rem;font-weight:600;'> View Code</a>",
           followups: ['ConSnow', 'Infinity Interns', 'GitHub & LinkedIn']
         },
         {
@@ -2035,7 +2145,7 @@
         },
         {
           keys: ['resume', 'cv', 'pdf', 'download resume', 'download cv'],
-          reply: "Grab my resume right here:<br><br><a href='Resume.pdf' download style='display:inline-block;margin-top:6px;margin-right:8px;padding:6px 12px;background:#ededed;color:#141415;border-radius:6px;text-decoration:none;font-size:12px;font-weight:500;'> Download Resume (PDF)</a>",
+          reply: "Grab my resume right here:<br><br><a href='Resume.pdf' download style='display:inline-block;margin-top:6px;margin-right:8px;padding:6px 12px;background:var(--text);color:var(--on-primary);border-radius:6px;text-decoration:none;font-size:12px;font-weight:500;'> Download Resume (PDF)</a>",
           followups: ['Skills', 'Projects', 'Contact']
         },
         {
@@ -2338,6 +2448,38 @@
         });
       }, { rootMargin: '-45% 0px -50% 0px' });
       document.querySelectorAll('section[id]').forEach(s => sectionObserver.observe(s));
+    })();
+  </script>
+  <script>
+    /* Light and dark mode toggle */
+    (function () {
+      const root = document.documentElement;
+      const btn = document.getElementById('themeToggle');
+      const media = window.matchMedia('(prefers-color-scheme: light)');
+
+      function apply(theme, animate) {
+        if (animate && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          root.classList.add('theme-switching');
+          setTimeout(() => root.classList.remove('theme-switching'), 300);
+        }
+        root.dataset.theme = theme;
+        btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+      }
+
+      apply(root.dataset.theme, false);
+
+      btn.addEventListener('click', () => {
+        const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        apply(next, true);
+        try { localStorage.setItem('theme', next); } catch (e) {}
+      });
+
+      // Follow the system setting until the visitor picks a theme themselves
+      media.addEventListener('change', e => {
+        let saved = null;
+        try { saved = localStorage.getItem('theme'); } catch (err) {}
+        if (!saved) apply(e.matches ? 'light' : 'dark', true);
+      });
     })();
   </script>
 </body>
